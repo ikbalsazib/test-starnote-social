@@ -1,0 +1,77 @@
+<ion-toolbar color="primary">
+  <ion-buttons slot="end">
+    <ion-button (click)="presentPopover($event)">
+      <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <div class="containers" fxLayout="row" fxLayoutAlign="start center"  >
+    <div class="logo" routerLink="/home">
+      <img src="../../assets/images/logo_star_white.svg" alt="">
+    </div>
+
+    <div class="search-bar">
+      <form>
+        <input class="search-input" type="text" name="search" placeholder="Search...">
+        <button type="submit"><span><img src="../../assets/icon/search.svg" alt=""></span></button>
+      </form>
+    </div><!--search-bar end-->
+
+
+    <div class="custom-nav-btn" slot="end">
+      <nav class="desktop-nav">
+        <ul class="nav-list">
+          <li>
+            <!--            <a [routerLink]="p.url" [class.active]="selectedPath === p.url" router-direction="forward">-->
+            <!--              {{p.title}}-->
+            <!--            </a>-->
+            <a routerLink="/home" title="">
+              <span><img src="../../assets/icon/home.svg" alt=""></span>
+              Home
+            </a>
+          </li>
+          <li>
+            <a routerLink="/messages" title="">
+              <span><img src="../../assets/icon/chat.svg" alt=""></span>
+              Message
+            </a>
+          </li>
+          <li>
+            <a routerLink="/my-profile" title="">
+              <span><img src="../../assets/icon/user.svg" alt=""></span>
+              Profile
+            </a>
+          </li>
+          <li>
+            <a routerLink="/test" title="">
+              <span><img src="../../assets/icon/bell.svg" alt=""></span>
+              Notification
+            </a>
+          </li>
+          <li>
+            <a href="#" title="">
+              <span><img style="width: 22px" src="../../assets/icon/trofee.svg" alt=""></span>
+              LeaderBoard
+            </a>
+          </li>
+
+          <li>
+            <a href="#" title="">
+              <span><img  src="../../assets/icon/add-user.svg" alt=""></span>
+              Friends
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+
+  </div>
+</ion-toolbar>
+
+
+
+
+
+
+

@@ -1,0 +1,272 @@
+.wrapper {
+  --ion-background-color: #F05922;
+}
+
+/* ================= sign-in ================ */
+
+
+.login-area {
+  margin-top: 150px;
+}
+
+.left-info{
+  padding: 35px;
+}
+.right-main{
+  padding: 35px;
+}
+.login-content{
+  width: 870px;
+  margin: 0 auto;
+  position: relative;
+}
+// Top Bubble
+.login-content:before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 56px;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+.login-content:after {
+  content: '';
+  position: absolute;
+  top: -37px;
+  left: 43px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.login-container {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+// Right Border...
+.login-container:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  height: 100%;
+  width: 1px;
+  background-color: #f0f0f0;
+}
+
+
+
+/* =============== login-sec ============= */
+.slug-text{
+  margin: 20px 0 50px 0;
+  font-family: 'CircularStd', sans-serif;
+  text-align: center;
+  color: #474450;
+  font-size: 16px;
+}
+
+.login-sec {
+  width: 100%;
+  padding: 25px 0;
+
+}
+
+// Down Bubble...
+.login-sec:before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  right: 70px;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #fff;
+}
+.login-sec:after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  right: 55px;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #fff;
+}
+
+
+.logo-thumb {
+  margin: 0 auto;
+  width: 150px;
+  height: auto;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.left-info {
+  //padding-left: 45px;
+}
+
+.creative-img {
+  width: 100%;
+  height: auto;
+  margin-top: 35px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.sign-in-head{
+  font-family: CircularStdMedium, sans-serif;
+  color: #000000;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  // font-family: 'CircularStdMedium', sans-serif;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: #e44d3a;
+  }
+}
+
+.collapse-btn {
+  text-align: right;
+  margin-top: -35px;
+  margin-bottom: 40px;
+
+  .col-btn {
+    width: 100px;
+  }
+
+  .btn-last {
+    margin-left: 5px;
+  }
+}
+
+
+.facebook {
+  --background: #4267B2;
+}
+
+.login-resources {
+  margin-top: 35px;
+  h4 {
+    text-align: center;
+    font-family: CircularStdMedium, sans-serif;
+    margin-bottom: 25px;
+  }
+}
+
+.google {
+  --background: #D74720;
+}
+.email {
+  --background: #05B05F;
+}
+.social-login-btn {
+  margin-bottom: 20px;
+}
+
+.btn-logo {
+  margin-right: 0;
+}
+
+//.btn-group {
+//  width: 60%;
+//  margin: 0 auto;
+//}
+
+.btn-content {
+  display: inline-block;
+  width: 80%;
+  margin: auto;
+  .icon {
+    width: 20%;
+  }
+  img {
+    float: left;
+    width: 17px;
+    // margin-right: 20px;
+  }
+
+  span {
+    width: 60%;
+    float: left;
+    font-size: 17px;
+  }
+}
+
+// Login Footer...
+.footer {
+  width: 70%;
+  margin: auto;
+
+  .link-area{
+    margin-top: 85px;
+    width: 100%;
+
+    .left {
+      float: left;
+    }
+
+    ul {
+      li {
+        display: inline-block;
+        border-right: 1px solid #ffffff;
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+    .link {
+      font-family: CircularStd, sans-serif;
+      font-size: 14px;
+      color: #ffffff;
+      padding: 15px;
+      text-decoration: none;
+    }
+
+    .right {
+      float: right;
+
+      p {
+        font-family: CircularStd, sans-serif;
+        color: #ffffff;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+

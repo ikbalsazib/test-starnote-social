@@ -1,0 +1,42 @@
+<div>
+
+  <form [formGroup]="phoneLoginForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <div class="sn-field">
+            <input formControlName="phone" type="text" name="phone" placeholder="Phone No" value="+880">
+            <ion-icon name="call-outline"></ion-icon>
+          </div><!--sn-field end-->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+
+  <hr>
+
+  <div id="recaptcha-container"></div>
+
+  <hr>
+
+  <ion-button class="button is-info" (click)="sendLoginCode()">Send Verification Code</ion-button>
+
+  <div *ngIf="windowRef.confirmationResult">
+    <div class="sn-field">
+      <input type="text" name="code" [(ngModel)]="verificationCode" class="input" placeholder="Enter your Verification Code Here">
+    </div>
+
+    <ion-button class="button is-success" (click)="verifyLoginCode()">Login</ion-button>
+  </div>
+
+</div>
+
+
+<!--<div *ngIf="user">-->
+
+<!--  <div class="notification is-success">You have successfully logged in with your phone number!</div>-->
+
+<!--  UserId: {{ user?.uid }}-->
+
+<!--</div>-->

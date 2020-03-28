@@ -1,0 +1,258 @@
+<ion-header>
+  <star-toolbar></star-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="left-area" size="3">
+
+          <div class="user-data full-width">
+            <div class="user-profile">
+              <div class="username-dt">
+                <div class="usr-pic">
+                  <img [src]="userAuthService.loggedInUserInfo()?.photoURL || '../../../assets/images/girl.jpeg'" alt="">
+                </div>
+              </div><!--username-dt end-->
+              <div class="user-specs">
+                <h3>{{userAuthService.loggedInUserInfo()?.displayName || 'Intia Parvin'}}</h3>
+                <span>Graphic Designer at Self Employed</span>
+              </div>
+            </div><!--user-profile end-->
+            <ul class="user-fw-status">
+              <li>
+                <h4>Friends</h4>
+                <span>340</span>
+              </li>
+              <li>
+                <h4>Followers</h4>
+                <span>420</span>
+              </li>
+              <li>
+                <a href="#" title="">View Profile</a>
+              </li>
+            </ul>
+          </div><!--user-data end-->
+          <div class="suggestion full-width">
+            <div class="header-sugg">
+              <h3>Suggestions</h3>
+            </div>
+            <div class="profile_topbar">
+              <div class="user-detail">
+                <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">
+                <div class="usy-name">
+                  <h3>Intia Parvin</h3>
+                  <span>Graphic Designer</span>
+                </div>
+              </div>
+              <div class="add-op">
+                <a href="#" title="" class="ed-opts-open"><i class="fa fa-plus"></i></a>
+              </div>
+            </div>
+            <div class="profile_topbar">
+              <div class="user-detail">
+                <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">
+                <div class="usy-name">
+                  <h3>Intia Parvin</h3>
+                  <span>Graphic Designer</span>
+                </div>
+              </div>
+              <div class="add-op">
+                <a href="#" title="" class="ed-opts-open"><i class="fa fa-plus"></i></a>
+              </div>
+            </div>
+            <div class="profile_topbar">
+              <div class="user-detail">
+                <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">
+                <div class="usy-name">
+                  <h3>Intia Parvin</h3>
+                  <span>Graphic Designer</span>
+                </div>
+              </div>
+              <div class="add-op">
+                <a href="#" title="" class="ed-opts-open"><i class="fa fa-plus"></i></a>
+              </div>
+            </div>
+            <div class="profile_topbar">
+              <div class="user-detail">
+                <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">
+                <div class="usy-name">
+                  <h3>Intia Parvin</h3>
+                  <span>Graphic Designer</span>
+                </div>
+              </div>
+              <div class="add-op">
+                <a href="#" title="" class="ed-opts-open"><i class="fa fa-plus"></i></a>
+              </div>
+            </div>
+          </div><!--user-data end-->
+
+
+
+        </ion-col>
+
+        <ion-col class="main" size="6">
+          <div class="post-topbar" routerLink="/create-post">
+            <div class="user-picy">
+              <img src="../../../assets/images/girl.jpeg" alt="">
+            </div>
+            <div class="status">
+              <h6>Write Something...</h6>
+            </div>
+            <div class="post-st">
+              <ul>
+                <li><a class="post_project" title="">Write a Post</a></li>
+<!--                <li><a class="post-jb active" href="#" title="">Write a Post</a></li>-->
+              </ul>
+            </div><!--post-st end-->
+          </div><!--post-topbar end-->
+
+          <div class="posts-section">
+            <div class="post-bar" *ngFor="let post of postsList">
+              <div class="post_topbar">
+                <div class="usy-dt">
+                  <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">
+                  <div class="usy-name">
+                    <h3>Intia Parvin</h3>
+<!--                    <span>{{userObservable$ | async | json}}</span>-->
+                    <span><img src="../../../assets/images/clock.png" alt="">{{post.date | dateAgo}}</span>
+                  </div>
+                  <ion-button (click)="findUser()">T</ion-button>
+                </div>
+                <div class="ed-opts">
+                  <a href="#" title="" class="ed-opts-open"><ion-icon name="ellipsis-vertical"></ion-icon></a>
+                </div>
+              </div>
+              <div class="post-view">
+                <div class="text-view" *ngIf="post.postDescription">
+                  <p> {{post.postDescription}}...<span>Read More</span></p>
+                </div>
+                <div class="image-view" *ngIf="post.postThumbnail">
+                  <img [src]="post.postThumbnail" [alt]="post.postDescription">
+                </div>
+              </div>
+
+              <div class="job-status-bar">
+                <ul class="like-com">
+                  <li>
+                    <a href="#"><i class="fa fa-heart"></i> Like</a>
+<!--                    <img src="../../../assets/images/liked-img.png" alt="">-->
+                    <span>25</span>
+                  </li>
+                  <li><a href="#" title="" class="com"><img src="../../../assets/images/com.png" alt=""> Comment 15</a></li>
+                </ul>
+
+              </div>
+            </div><!--post-bar end-->
+
+
+<!--            <div class="post-bar">-->
+<!--              <div class="post_topbar">-->
+<!--                <div class="usy-dt">-->
+<!--                  <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">-->
+<!--                  <div class="usy-name">-->
+<!--                    <h3>Intia Parvin</h3>-->
+<!--                    <span><img src="../../../assets/images/clock.png" alt="">3 min ago</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="ed-opts">-->
+<!--                  <a href="#" title="" class="ed-opts-open"><ion-icon name="ellipsis-vertical"></ion-icon></a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="post-view">-->
+<!--                <div class="text-view" style="padding-bottom: 0">-->
+<!--                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum dolor sit amet, consectetur adipisicing elit.lorem10</p>-->
+<!--                </div>-->
+
+<!--                <div class="image-view">-->
+<!--                  <img src="../../../assets/images/post2.jpg" alt="">-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="job-status-bar">-->
+<!--                <ul class="like-com">-->
+<!--                  <li>-->
+<!--                    <a href="#"><i class="fa fa-heart"></i> Like</a>-->
+<!--                    &lt;!&ndash;                    <img src="../../../assets/images/liked-img.png" alt="">&ndash;&gt;-->
+<!--                    <span>25</span>-->
+<!--                  </li>-->
+<!--                  <li><a href="#" title="" class="com"><img src="../../../assets/images/com.png" alt=""> Comment 15</a></li>-->
+<!--                </ul>-->
+
+<!--              </div>-->
+<!--            </div>&lt;!&ndash;post-bar end&ndash;&gt;-->
+
+<!--            <div class="post-bar">-->
+<!--              <div class="post_topbar">-->
+<!--                <div class="usy-dt">-->
+<!--                  <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">-->
+<!--                  <div class="usy-name">-->
+<!--                    <h3>Intia Parvin</h3>-->
+<!--                    <span><img src="../../../assets/images/clock.png" alt="">3 min ago</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="ed-opts">-->
+<!--                  <a href="#" title="" class="ed-opts-open"><ion-icon name="ellipsis-vertical"></ion-icon></a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="post-view">-->
+<!--                <div class="image-view">-->
+<!--                  <img src="../../../assets/images/post.jpg" alt="">-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="job-status-bar">-->
+<!--                <ul class="like-com">-->
+<!--                  <li>-->
+<!--                    <a href="#"><i class="fa fa-heart"></i> Like</a>-->
+<!--                    &lt;!&ndash;                    <img src="../../../assets/images/liked-img.png" alt="">&ndash;&gt;-->
+<!--                    <span>25</span>-->
+<!--                  </li>-->
+<!--                  <li><a href="#" title="" class="com"><img src="../../../assets/images/com.png" alt=""> Comment 15</a></li>-->
+<!--                </ul>-->
+
+<!--              </div>-->
+<!--            </div>&lt;!&ndash;post-bar end&ndash;&gt;-->
+          </div>
+        </ion-col>
+
+        <ion-col size="3" class="right-area">
+          <div class="widget widget-about">
+            <img src="../../../assets/images/starnote_social_icon_logo.jpg" alt="">
+            <h3>Your Day with Starnote Social</h3>
+            <span>Pay only for the Hours worked</span>
+            <div class="sign_link">
+              <h3><a href="#" title="">About Starnote Social</a></h3>
+              <a href="#" title="">Learn More</a>
+            </div>
+          </div><!--widget-about end-->
+
+          <div class="online-user">
+            <div class="profile_topbar" *ngFor="let i of [0,1,2,3,4,5]">
+              <div class="user-detail">
+                <div class="profile-thumb">
+                  <img class="profile-thumb" src="../../../assets/images/girl.jpeg" alt="">
+                  <span class="online-dot"></span>
+                </div>
+                <div class="usy-name">
+                  <h3>Intia Parvin</h3>
+                  <span>Hello! How are you?</span>
+                </div>
+              </div>
+              <div class="add-op">
+                <span>5</span>
+              </div>
+            </div>
+          </div><!--widget-about end-->
+
+
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

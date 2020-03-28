@@ -1,0 +1,20 @@
+.container {
+  padding: 15px;
+}
+
+.setting {
+  .title {
+    font-size: 18px;
+    font-family: 'CircularStdMedium', sans-serif;
+  }
+  ul {
+    padding: 0;
+    li {
+      padding: 8px 0;
+      list-style: none;
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}

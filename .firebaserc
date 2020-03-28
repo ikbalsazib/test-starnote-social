@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "starnote-social-web": {
+      "hosting": {
+        "app": [
+          "starnote-social-web"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<ion-header>
+  <star-toolbar></star-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="addNewItem()">Add New Book</ion-button>
+  <ion-button (click)="updateItem()">Update Book</ion-button>
+  <ion-button (click)="removeItem()">Delete Book</ion-button>
+  <div class="spacer"></div>
+
+  <div class="article" *ngFor="let book of bookObservable | async">
+    <h4>{{book.title}}</h4>
+    <h6>{{book.author}}</h6>
+    <p>{{book.content}}</p>
+  </div>
+</ion-content>

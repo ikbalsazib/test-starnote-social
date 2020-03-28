@@ -1,0 +1,78 @@
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 860px;
+  min-height: 400px;
+  margin: auto;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.top {
+  margin: 20px 0;
+}
+
+.input-text {
+  width: 85%;
+  margin: auto;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  // margin: 8px 0;
+  // display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.profile-topbar {
+  width: 85%;
+  margin: auto;
+  padding: 20px 20px 15px 5px;
+}
+
+
+.profile-thumb {
+  width: 65px;
+  height: 65px;
+  margin-right: 20px;
+}
+
+img {
+  float: left;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.btn {
+  margin-top: -8px;
+  border: 2px solid var(--ion-color-primary);
+  background-color: white;
+  color: var(--ion-color-primary);
+  padding: 5px 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-group {
+  width: 85%;
+  margin: auto;
+
+}
+
+.image-view-big {
+  max-width: 400px;
+  height: auto;
+  margin: auto;
+
+  .image-view {
+    width: 100%;
+  }
+}
