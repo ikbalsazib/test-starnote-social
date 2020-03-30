@@ -5,12 +5,14 @@ import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {WindowService} from './window.service';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {merge} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
-  private dbPath = '/users';
+  private dbPath = '/Users';
   userRef: AngularFireList<UserModel> = null;
   currentUser: any;
   userData: any;
@@ -23,7 +25,8 @@ export class UserAuthService {
       private afAuth: AngularFireAuth,
       private router: Router,
       private ngZone: NgZone,
-      private windowService: WindowService
+      private windowService: WindowService,
+      private httpClient: HttpClient
   ) {
     // Realtime Databases...
     this.userRef = db.list(this.dbPath);
@@ -102,15 +105,42 @@ logged in and setting up null when logged out */
 
   setAuthUserData(user) {
       if (!user) { return; }
-      const path = `users/${user.uid}`;
+      const path = `Users/${user.uid}`;
+      // let iPAddress;
+      // this.getUserIPAddress().subscribe(info => iPAddress = info.ip);
       const userData: any = {
-          uid: user.uid,
+          uID: user.uid,
           email: user.email,
           displayName: user.displayName,
-          photoURL: user.photoURL
+          photoURL: user.photoURL,
+          // ipAddress: iPAddress,
+          // phone: '',
+          // points: '',
+          role: 'user',
+          // registrationType: '',
+          registeredTime: Date.now(),
+          // referCode: '',
+          // referable: '',
+          // permission: '',
+          // password: '',
+          // deviceId: '',
+          // randomCall: ''
       };
       this.db.object(path).update(userData);
   }
+
+    setUserExtraData(newData: any) {
+        // const data = { [this.userData.uid]: newData };
+        this.db.object(`Users/${this.userData.uid}`).update(newData);
+    }
+
+    getUserCompleteFieldData(userID) {
+      return this.db.object(`Users/${userID}`);
+    }
+
+    getUserIPAddress() {
+        return this.httpClient.get<any>('http://api.ipify.org/?format=json');
+    }
 
 
   // SetUserData(user) {

@@ -1,0 +1,55 @@
+<div class="user-data full-width">
+  <div class="user-profile">
+    <div class="username-dt">
+      <div class="usr-pic">
+        <img [src]="userAuthService.loggedInUserInfo()?.photoURL || '../../../assets/images/girl.jpeg'" alt="">
+      </div>
+    </div><!--username-dt end-->
+    <div class="user-specs">
+      <h3>{{userAuthService.loggedInUserInfo()?.displayName || 'Intia Parvin'}}</h3>
+      <span>Graphic Designer at Self Employed</span>
+    </div>
+  </div><!--user-profile end-->
+  <ul class="user-fw-status">
+    <li>
+      <h4>Friends</h4>
+      <span>340</span>
+    </li>
+    <li>
+      <h4>Followers</h4>
+      <span>420</span>
+    </li>
+    <li>
+      <a (click)="onUpdateProfileInfo()">Update Profile</a>
+<!--      <a href="#" title="">View Profile</a>-->
+    </li>
+  </ul>
+</div><!--user-data end-->
+
+
+<!--For Dialog-->
+<ng-template #dialougeTemplate>
+      <h2 style="color: #ff4b1a">Dialogue</h2>
+
+  <form [formGroup]="reactiveForm" (ngSubmit)="onSubmitForm()">
+    <ion-item [disabled]="userCompletedInfo.phone">
+      <ion-label position="floating">Phone Number..</ion-label>
+      <ion-input formControlName="phone" type="text" [value]="userCompletedInfo.phone? userCompletedInfo.phone : ''"></ion-input>
+    </ion-item>
+
+    <ion-item [disabled]="userCompletedInfo.email">
+      <ion-label position="floating">Email Address..</ion-label>
+      <ion-input formControlName="email" type="email" [value]="userCompletedInfo.email? userCompletedInfo.email : ''"></ion-input>
+    </ion-item>
+
+    <ion-item [disabled]="userCompletedInfo.address">
+      <ion-label position="floating">Full Address..</ion-label>
+      <ion-input formControlName="address" type="text" [value]="userCompletedInfo.address? userCompletedInfo.address : ''"></ion-input>
+    </ion-item>
+
+    <div class="btn-group">
+      <ion-button type="submit" class="ion-float-left">Update</ion-button>
+      <ion-button class="ion-float-right" (click)="onCancel()" color="danger">Cancel</ion-button>
+    </div>
+  </form>
+</ng-template>

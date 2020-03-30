@@ -7,6 +7,10 @@ import {LoginFieldComponent} from './login-field/login-field.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SignupFieldComponent} from './signup-field/signup-field.component';
 import {PhoneLoginComponent} from './phone-login/phone-login.component';
+import {ReactionComponent} from './reaction/reaction.component';
+import {UserReactionComponent} from './user-reaction/user-reaction.component';
+import {ProfileShortComponent} from './profile-short/profile-short.component';
+import {MatDialogModule} from '@angular/material';
 
 
 
@@ -14,7 +18,10 @@ import {PhoneLoginComponent} from './phone-login/phone-login.component';
     declarations: [
         LoginFieldComponent,
         SignupFieldComponent,
-        PhoneLoginComponent
+        PhoneLoginComponent,
+        ReactionComponent,
+        UserReactionComponent,
+        ProfileShortComponent
     ],
     imports: [
         CommonModule,
@@ -27,7 +34,11 @@ import {PhoneLoginComponent} from './phone-login/phone-login.component';
     exports: [
         LoginFieldComponent,
         SignupFieldComponent,
-        PhoneLoginComponent
+        PhoneLoginComponent,
+        ReactionComponent,
+        UserReactionComponent,
+        ProfileShortComponent,
+        MatDialogModule
     ]
 })
 export class ComponentModule { }

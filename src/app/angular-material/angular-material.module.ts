@@ -8,6 +8,7 @@ import {
     MatInputModule, MatProgressSpinnerModule, MatSelectModule,
     MatSortModule,
     MatTableModule,
+    MatDialogModule
 } from '@angular/material';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 

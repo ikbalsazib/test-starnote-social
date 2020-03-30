@@ -1,0 +1,95 @@
+.full-width {
+  float: left;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 20px;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+.username-dt {
+  float: left;
+  width: 100%;
+  background-color: var(--ion-color-primary);
+  padding-top: 40px;
+}
+.user-data {
+  text-align: center;
+}
+.usr-pic {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto -48px;
+}
+.usr-pic > img {
+  float: none;
+  border: 5px solid #fff;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+  width: 100%;
+}
+.user-profile {
+  float: left;
+  width: 100%;
+}
+.user-specs {
+  float: left;
+  width: 100%;
+  padding: 63px 0 27px 0;
+}
+.user-specs h3 {
+  font-family: 'CircularStdMedium', sans-serif;
+  color: #000000;
+  font-size: 24px;
+  text-transform: capitalize;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.user-specs span {
+  color: #686868;
+  font-size: 14px;
+  font-family: 'CircularStd', sans-serif;
+}
+
+
+
+.user-fw-status {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+.user-fw-status li {
+  list-style: none;
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
+  padding: 15px 0;
+}
+.user-fw-status li:last-child {
+  border-bottom: 0;
+}
+.user-fw-status li:nth-child(1),
+.user-fw-status li:nth-child(2) {
+  border-bottom: 0;
+}
+.user-fw-status li h4 {
+  font-family: 'CircularStdMedium', sans-serif;
+  color: #686868;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.user-fw-status span {
+  color: #000000;
+  font-size: 20px;
+}
+.user-fw-status li a {
+  font-family: 'CircularStd', sans-serif;
+  text-decoration: none;
+  color: #e44d3a;
+  font-size: 14px;
+  font-weight: 600;
+}

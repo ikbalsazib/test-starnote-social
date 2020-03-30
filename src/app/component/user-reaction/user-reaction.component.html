@@ -1,0 +1,20 @@
+
+<!--<ion-button (click)="react(true)" [class.btn-liked]="userReaction != null">Like</ion-button>-->
+<!--    <div>-->
+
+<!--      <span *ngIf="hasReactions(val)">-->
+<!--        {{ reactionCount[val] }}-->
+<!--      </span>-->
+<!--    </div>-->
+
+<div class="job-status-bar">
+    <ul class="like-com">
+        <li>
+            <a (click)="react(true)" [class.active]="userReaction != null"><i class="fa fa-heart"></i> Like</a>
+            <!--                    <img src="../../../assets/images/liked-img.png" alt="">-->
+            <span *ngIf="hasReactions(val)">{{ reactionCount[val] }} </span>
+        </li>
+        <li><a href="#" title="" class="com"><img src="../../../assets/images/com.png" alt=""> Comment 15</a></li>
+    </ul>
+
+</div>

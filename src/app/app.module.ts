@@ -17,6 +17,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {UserAuthService} from './services/user-auth.service';
 import {NgxImageCompressService} from 'ngx-image-compress';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [AppComponent],
@@ -30,6 +31,7 @@ import {NgxImageCompressService} from 'ngx-image-compress';
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         AngularFireStorageModule,
+        HttpClientModule,
         FlexLayoutModule
     ],
     providers: [
