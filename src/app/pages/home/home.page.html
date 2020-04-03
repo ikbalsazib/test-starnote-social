@@ -4,7 +4,12 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="container">
+<!--    <ion-button (click)="loadMore()">Load</ion-button>-->
     <ion-grid>
       <ion-row>
         <ion-col class="left-area" size="3">
@@ -84,23 +89,16 @@
               </ul>
             </div><!--post-st end-->
           </div><!--post-topbar end-->
+          <!-- *ngIf="combinedPosts$ | async; else loading; let posts" -->
 
-          <div class="posts-section" *ngIf="combinedPosts$ | async; else loading; let posts">
+          <ion-button (click)="doRefresh()">Refresh</ion-button>
+
+          <div class="posts-section">
 <!--            {{combinedPosts$ | async | json}}-->
-            <div class="post-bar" *ngFor="let post of posts">
-              <div class="post_topbar">
-                <div class="usy-dt">
-                  <img class="profile-thumb" [src]="post.author.photoURL ? post.author.photoURL : '../../../assets/images/girl.jpeg'" alt="">
-                  <div class="usy-name">
-                    <h3>{{post.author.displayName}}</h3>
-<!--                    <span>{{userObservable$ | async | json}}</span>-->
-                    <span><img src="../../../assets/images/clock.png" alt="">{{post.date | dateAgo}}</span>
-                  </div>
-                </div>
-                <div class="ed-opts">
-                  <a href="#" title="" class="ed-opts-open"><ion-icon name="ellipsis-vertical"></ion-icon></a>
-                </div>
-              </div>
+            <div class="post-bar" *ngFor="let post of postList | reverse">
+              <!-- Post Author Top -->
+              <post-auth [authorID]="post.authorID" [postDate]="post.date"></post-auth>
+              <!-- Main Post View -->
               <div class="post-view">
                 <div class="text-view" *ngIf="post.postDescription">
                   <p> {{post.postDescription}}...<span>Read More</span></p>
@@ -112,6 +110,10 @@
               <!-- Reaction Bottom -->
               <user-reaction [postID]="post.postID"></user-reaction>
             </div><!--post-bar end-->
+
+            <ion-infinite-scroll *ngIf="this.finishedLoading !== true" (ionInfinite)="onInfiniteScroll($event)">
+              <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
 
           </div>
         </ion-col>

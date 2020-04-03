@@ -1,12 +1,12 @@
-<div class="user-data full-width">
+<div class="user-data full-width" *ngIf="user$ | async; else loading; let userInfo">
   <div class="user-profile">
     <div class="username-dt">
       <div class="usr-pic">
-        <img [src]="userAuthService.loggedInUserInfo()?.photoURL || '../../../assets/images/girl.jpeg'" alt="">
+        <img [src]="!userInfo.imageThumbnail ? '../../../assets/images/girl.jpeg' : userInfo.imageThumbnail" alt="">
       </div>
     </div><!--username-dt end-->
     <div class="user-specs">
-      <h3>{{userAuthService.loggedInUserInfo()?.displayName || 'Intia Parvin'}}</h3>
+      <h3>{{!userInfo.name ? 'Unnamed' : userInfo.name}}</h3>
       <span>Graphic Designer at Self Employed</span>
     </div>
   </div><!--user-profile end-->
@@ -52,4 +52,8 @@
       <ion-button class="ion-float-right" (click)="onCancel()" color="danger">Cancel</ion-button>
     </div>
   </form>
+</ng-template>
+
+<ng-template #loading>
+  Loading...
 </ng-template>

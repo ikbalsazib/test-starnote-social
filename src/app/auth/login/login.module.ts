@@ -8,8 +8,10 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import {AngularMaterialModule} from '../../angular-material/angular-material.module';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {ComponentModule} from '../../component/component.module';
+import {Ng2TelInputModule} from 'ng2-tel-input';
+import {AdditionalInfoModule} from '../../additional-info/additional-info.module';
 
 @NgModule({
     imports: [
@@ -20,7 +22,10 @@ import {ComponentModule} from '../../component/component.module';
         LoginPageRoutingModule,
         AngularMaterialModule,
         FlexModule,
-        ComponentModule
+        ComponentModule,
+        Ng2TelInputModule,
+        AdditionalInfoModule,
+        FlexLayoutModule
     ],
   declarations: [LoginPage]
 })

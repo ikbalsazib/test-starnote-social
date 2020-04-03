@@ -1,0 +1,12 @@
+<div class="post_topbar">
+  <div class="usy-dt">
+    <img class="profile-thumb" [src]="user?.imageThumbnail ? user?.imageThumbnail : '../../../assets/images/girl.jpeg'" alt="">
+    <div class="usy-name">
+      <h3>{{user?.name ? user.name : 'Unnamed'}}</h3>
+      <span><img src="../../../assets/images/clock.png" alt="">{{postDate | dateAgo}}</span>
+    </div>
+  </div>
+  <div class="ed-opts">
+    <a title="" class="ed-opts-open"><ion-icon name="ellipsis-vertical"></ion-icon></a>
+  </div>
+</div>

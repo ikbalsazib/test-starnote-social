@@ -5,21 +5,23 @@ import {AuthGuard} from './guard/auth.guard';
 import {AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 
 // AngularFire Auth Guard System...
-const redirectLoggedInToAuth = () => redirectLoggedInTo(['/home']);
+const redirectLoggedInToAuth = () => redirectLoggedInTo(['/']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: '',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+  },
+
   {
     path: 'login',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule),
     canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToAuth }
   },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
-  },
+
   {
     path: 'messages',
     loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule),
@@ -37,6 +39,18 @@ const routes: Routes = [
   {
     path: 'create-post',
     loadChildren: () => import('./pages/create-post/create-post.module').then( m => m.CreatePostPageModule)
+  },
+  {
+    path: 'profile-completion',
+    loadChildren: () => import('./pages/profile-completion/profile-completion.module').then( m => m.ProfileCompletionPageModule)
+  },
+  {
+    path: 'test-two',
+    loadChildren: () => import('./pages/test-two/test-two.module').then( m => m.TestTwoPageModule)
+  },
+  {
+    path: 'scroll',
+    loadChildren: () => import('./pages/scroll/scroll.module').then( m => m.ScrollPageModule)
   },
 ];
 

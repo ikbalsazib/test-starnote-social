@@ -1,0 +1,95 @@
+<!--<ion-header>-->
+<!--  <ion-toolbar>-->
+<!--    <ion-title>profile-completion</ion-title>-->
+<!--  </ion-toolbar>-->
+<!--</ion-header>-->
+
+<ion-content class="wrapper">
+
+    <div class="login-area">
+      <div class="login-content">
+        <div class="login-container">
+          <div class="login-sec">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6" class="left-info">
+                  <table class="img-wrapper">
+                    <tr>
+                      <td class="img-thumb">
+                        <div class="">
+                          <div class="avatar">
+                            <img [src]="existsProfilePic !== '' ? existsProfilePic : avatar" [ngClass]="{'img-circle': existsProfilePic !== ''}" />
+                          </div>
+                          <div class="upload-btn">
+                            <input hidden #filePicker accept="image/*" (change)="onImageUpload($event)" type="file" />
+                            <ion-button (click)="filePicker.click()" fill="outline">Update Picture</ion-button>
+                          </div>
+
+                        </div>
+                      </td>
+                    </tr>
+
+                  </table>
+                </ion-col>
+
+                <ion-col size="12" size-md="6" class="right-main">
+                  <div class="collapse-btn">
+                  </div>
+                  <div class="sign-in">
+                    <h3 class="sign-in-head">Complete Your Profile</h3>
+                    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+                      <ion-item>
+                        <ion-label position="floating">Full Name</ion-label>
+                        <ion-input [ngModel]="existsName" name="name"></ion-input>
+                      </ion-item>
+
+                      <ion-item [disabled]="data.registrationType === 'google' || data.registrationType === 'email'">
+                        <ion-label position="floating">Email Address</ion-label>
+                        <ion-input [ngModel]="existsEmail" name="email"></ion-input>
+                      </ion-item>
+
+                      <ion-item [disabled]="data.registrationType === 'phone'">
+                        <ion-label position="floating">Phone Number</ion-label>
+                        <ion-input [ngModel]="existsPhone" name="phone"></ion-input>
+                      </ion-item>
+
+                      <ion-item>
+                        <ion-label position="floating">Address</ion-label>
+                        <ion-input [ngModel]="existsAddress" name="address"></ion-input>
+                      </ion-item>
+
+                      <ion-item>
+                        <ion-label position="floating">BirthDate</ion-label>
+                        <ion-input ngModel name="birthDate"></ion-input>
+                      </ion-item>
+                      <div class="btn-group">
+                        <ion-button type="submit" class="ion-float-left">{{mobileQuery.matches? 'Update': 'Update Profile'}}</ion-button>
+                        <ion-button routerLink="/" fill="outline" class="ion-float-end" color="medium" type="button">{{mobileQuery.matches? 'Skip': 'Skip Now'}}</ion-button>
+                      </div>
+                    </form>
+
+                  </div> <!-- Sign IN ..-->
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </div> <!-- MAIN LOGIN CARD -->
+
+      <div class="footer">
+        <div class="link-area">
+          <ul class="left">
+            <li><a class="link" href="#">Help Center</a></li>
+            <li><a class="link" href="#">Privacy Policy</a></li>
+            <li><a class="link" href="#">Cookies Policy</a></li>
+            <li><a class="link" href="#">Copyright Policy</a></li>
+          </ul>
+          <div class="right">
+            <p>&copy; Copyright 2020 All Right Reserved StarDigi International</p>
+          </div>
+        </div>
+      </div> <!-- LOGIN FOOTER -->
+    </div>
+
+</ion-content>

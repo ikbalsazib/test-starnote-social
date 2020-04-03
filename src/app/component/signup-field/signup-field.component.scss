@@ -31,17 +31,6 @@ form {
   transform: translateY(-50%);
 }
 
-.checky-sec {
-  width: 305px;
-  margin-top: -6px;
-  a {
-    color: #808080;
-    float: right;
-    text-decoration: none;
-    font-family: CircularStd, sans-serif;
-    font-size: 14px;
-  }
-}
 
 .signin-btn {
   width: 100%;
@@ -51,4 +40,14 @@ form {
 ion-button {
   text-transform: capitalize;
   font-family: CircularStd, sans-serif;
+}
+
+// Responsive..
+@media only screen and (max-device-width: 767px) {
+  form {
+    input {
+      width: 100%;
+
+    }
+  }
 }

@@ -1,46 +1,6 @@
 
 <div class="">
-  <form *ngIf="isClickPhoneSignUpBtn; else emailSignUpField" [formGroup]="phoneSignUpForm">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12">
-          <div class="sn-field">
-            <input formControlName="phone" type="text" name="phone" placeholder="Phone No" value="+880">
-            <ion-icon name="call-outline"></ion-icon>
-          </div><!--sn-field end-->
-        </ion-col>
-        <ion-col size="12">
-          <div class="checky-sec">
-            <a href="#" title="">Forgot Password?</a>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <ion-button *ngIf="isClickPhoneSignUpBtn" (click)="onPhoneSignUp()" class="ion-float-left" type="submit" color="primary">Sign Up</ion-button>
-        <ion-button *ngIf="isClickEmailSignUpBtn" (click)="onEmailSignUp()" class="ion-float-left" type="submit" color="primary">Sign Up</ion-button>
-
-        <ion-button *ngIf="isClickPhoneSignUpBtn && !isClickEmailSignUpBtn" (click)="emailSignUp()" class="ion-float-right">
-          <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
-        </ion-button>
-        <ion-button *ngIf="!isClickPhoneSignUpBtn && isClickEmailSignUpBtn" (click)="phoneSignUp()" class="ion-float-right">
-          <ion-icon slot="icon-only" name="call-outline"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-</div>
-
-
-
-<!--Email SignUp Form...-->
-<ng-template #emailSignUpField>
-  <form [formGroup]="emailSignUpForm">
+  <form [formGroup]="emailSignUpForm" (ngSubmit)="onEmailSignUp()">
     <ion-grid>
       <ion-row>
         <ion-col size="12">
@@ -54,11 +14,12 @@
           </div><!--sn-field end-->
         </ion-col>
         <ion-col size="12">
-          <div class="checky-sec">
-            <a href="#" title="">Forgot Password?</a>
-          </div>
+          <ion-button fill="outline" class="ion-float-right" type="submit" color="primary">Sign Up</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
+
   </form>
-</ng-template>
+
+</div>
+

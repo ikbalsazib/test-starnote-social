@@ -9,6 +9,7 @@ import { TestPageRoutingModule } from './test-routing.module';
 import { TestPage } from './test.page';
 import {StarToolbarPageModule} from '../../star-toolbar/star-toolbar.module';
 import {CoreModule} from '../../core/core.module';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {CoreModule} from '../../core/core.module';
         IonicModule,
         TestPageRoutingModule,
         CoreModule,
-        StarToolbarPageModule
+        StarToolbarPageModule,
+        InfiniteScrollModule
     ],
   declarations: [TestPage]
 })

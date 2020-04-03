@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {WindowService} from '../../services/window.service';
-import {Router} from '@angular/router';
-import * as firebase from 'firebase';
+import {NavigationExtras, Router} from '@angular/router';
+import * as firebase from 'firebase/app';
+import {UserAuthService} from '../../services/user-auth.service';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {UiService} from '../../services/ui.service';
 
 @Component({
   selector: 'app-phone-login',
@@ -10,65 +13,120 @@ import * as firebase from 'firebase';
   styleUrls: ['./phone-login.component.scss'],
 })
 export class PhoneLoginComponent implements OnInit {
+    // Phone Number with ng2-tel-input...
+    phoneNumber: any;
+    isValid: any;
+    // Recaptcha Need..
+    windowRef: any;
+    verificationCode: string;
+    // Database..
+    currentAuthUser: any;
 
-  windowRef: any;
-  verificationCode: string;
+    constructor(
+        private win: WindowService,
+        private router: Router,
+        private db: AngularFireDatabase,
+        private uiService: UiService,
+        private ngZone: NgZone
+    ) { }
 
-  user: any;
-  // Input Form...
-  // Phone..
-  phoneLoginForm: FormGroup;
-  phone = new FormControl(null, {validators: [Validators.required]});
+    ngOnInit() {
+        // Recaptcha...
+        this.windowRef = this.win.windowRef;
+        this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
 
-  constructor(private win: WindowService, private router: Router) { }
+        this.windowRef.recaptchaVerifier
+            .render()
+            .then( widgetId => {
 
-  ngOnInit() {
-    // Phone Login Form..
-    this.phoneLoginForm = new FormGroup({
-      phone: this.phone
-    });
+                this.windowRef.recaptchaWidgetId = widgetId;
+            });
+    }
 
-    this.windowRef = this.win.windowRef;
-    this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    hasError(event: any): void {
+        this.isValid = event;
+    }
 
-    this.windowRef.recaptchaVerifier
-        .render()
-        .then( widgetId => {
-
-          this.windowRef.recaptchaWidgetId = widgetId;
-        });
-  }
+    getNumber(event: any) {
+        if (event) {
+            this.phoneNumber = event;
+        }
+    }
 
 
-  sendLoginCode() {
+    sendLoginCode() {
 
-    const appVerifier = this.windowRef.recaptchaVerifier;
+        const appVerifier = this.windowRef.recaptchaVerifier;
 
-    const num = this.phoneLoginForm.value.phone;
+        if (!this.isValid) {
+            this.uiService.showToastMessage('Invalid Phone Number! Please enter a valid phone number.');
+            return;
+        }
 
-    firebase.auth()
-        .signInWithPhoneNumber(num, appVerifier)
-        .then(result => {
 
-          this.windowRef.confirmationResult = result;
+        firebase.auth()
+            .signInWithPhoneNumber(this.phoneNumber, appVerifier)
+            .then(result => {
+              this.windowRef.confirmationResult = result;
 
-        })
-        .catch( error => console.log(error) );
+            })
+            .catch( error => this.uiService.showToastMessage('Something went wrong.') );
 
-  }
+    }
 
-  verifyLoginCode() {
-    this.windowRef.confirmationResult
-        .confirm(this.verificationCode)
-        .then( result => {
-          this.user = result.user;
-          this.router.navigate(['/home']);
+    verifyLoginCode() {
+        this.windowRef.confirmationResult
+            .confirm(this.verificationCode)
+            .then( (credential) => {
+                this.currentAuthUser = credential.user;
+                this.setAuthUserData(credential.user);
+                this.getUserCompleteFieldData(this.currentAuthUser).valueChanges()
+                    .subscribe(info => {
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                special: JSON.stringify(info)
+                            }
+                        };
+                        const numberOfField = Object.keys(info).length;
+                        if (numberOfField < 15) {
+                            this.router.navigate(['profile-completion'], navigationExtras);
+                        } else {
+                            this.ngZone.run(() => {
+                                this.router.navigate(['home']);
+                            });
+                        }
+                        // Reset Value..
+                        this.phoneNumber = '';
+                        this.verificationCode = '';
+                        this.windowRef.confirmationResult = null;
+                    });
 
-        })
-        .catch( error => console.log(error, 'Incorrect code entered?'));
-  }
+            })
+            .catch( error => this.uiService.showToastMessage('ERROR Code! Incorrect code entered?'));
+    }
 
-  onPhoneLogin() {
-    console.log(this.phoneLoginForm.value.phone);
-  }
+    setAuthUserData(user) {
+        if (!user) { return; }
+        const path = `Users/${user.uid}`;
+        const userData: any = {
+            uID: user.uid,
+            phone: user.phoneNumber,
+            // points: '',
+            role: 'user',
+            registrationType: 'phone',
+            registeredTime: Date.now(),
+            // referCode: '',
+            // referable: '',
+            // permission: '',
+            // password: '',
+            // deviceId: '',
+            // randomCall: ''
+        };
+        this.db.object(path).update(userData);
+    }
+
+    getUserCompleteFieldData(user) {
+        return this.db.object(`Users/${user.uid}`);
+    }
+
 }

@@ -10,37 +10,48 @@
             <div class="login-container">
                 <div class="login-sec">
                     <ion-grid>
-                        <ion-row>
-                            <ion-col size="6" class="left-info">
-                                <div class="logo-thumb">
-                                    <img src="../../../assets/images/star_logo_big.png" alt="">
-                                </div>
-                                <div class="slug-text">
-                                    <p>Starnote Social is a learning management system and social platform for teaching and learning for the teachers and the students.</p>
-                                </div>
-                                <div class="creative-img">
-                                    <img src="../../../assets/images/cm-main-img.png" alt="">
-                                </div>
+                        <ion-row ngClass.lt-md="ion-wrap-reverse">
+                            <ion-col size="12" size-md="6" class="left-info">
+                                <app-login-page-info></app-login-page-info>
                             </ion-col>
 
-                            <ion-col size="6" class="right-main">
-                                <div class="collapse-btn">
-                                    <ion-button (click)="onLoginFragment()" class="col-btn" color="primary">Login</ion-button>
-                                    <ion-button (click)="onSignUpFragment()" class="col-btn btn-last" color="light">Signup</ion-button>
-                                </div>
-                                <div class="sign-in" *ngIf="isLoginFragment && !isSignUpFragment">
+                            <ion-col size="12" size-md="6" class="right-main">
+
+                                <div class="sign-in" *ngIf="isPhoneLoginFragment">
                                     <h3 class="sign-in-head">Sign in</h3>
-                                    <app-login-field></app-login-field>
+
+                                    <app-phone-login></app-phone-login>
                                 </div> <!-- Sign IN ..-->
 
-                                <div class="sign-in" *ngIf="!isLoginFragment && isSignUpFragment">
+                                <div class="sign-in" *ngIf="isLoginEmailFragment">
+                                    <h3 class="sign-in-head">Sign in</h3>
+
+                                    <app-email-login></app-email-login>
+                                </div> <!-- Sign IN ..-->
+
+                                <div class="sign-in" *ngIf="isSignUpFragment">
                                     <h3 class="sign-in-head">Sign up</h3>
                                     <app-signup-field></app-signup-field>
                                 </div> <!-- Sign UP ..-->
 
                                 <!--                                            Login Resource-->
                                 <div class="login-resources">
-                                    <h4>Continue with Social Account</h4>
+                                    <h4>Login With...</h4>
+
+                                    <ion-button *ngIf="isLoginEmailFragment || isSignUpFragment" (click)="onPhoneLoginFragment()" class="phone social-login-btn" expand="block">
+                                        <div class="btn-content">
+                                            <img src="../../../assets/icon/phone.svg" alt="">
+                                            <span>Phone</span>
+                                        </div>
+                                    </ion-button>
+
+                                    <ion-button *ngIf="!isLoginEmailFragment" (click)="onEmailLoginFragment()" class="email social-login-btn" expand="block">
+                                        <div class="btn-content">
+                                            <img src="../../../assets/icon/mail.svg" alt="">
+                                            <span>Email</span>
+                                        </div>
+                                    </ion-button>
+
                                     <ion-button class="facebook social-login-btn" expand="block" (click)="onFacebookAuth()">
                                         <div class="btn-content">
                                             <img src="../../../assets/icon/facebook.svg" alt="">
@@ -54,12 +65,13 @@
                                         </div>
                                     </ion-button>
 
-                                    <ion-button class="email social-login-btn" expand="block">
-                                        <div class="btn-content">
-                                            <img src="../../../assets/icon/mail.svg" alt="">
-                                            <span>Email</span>
-                                        </div>
-                                    </ion-button>
+                                    <div class="signup-btn">
+                                        <ion-button fill="outline" expand="block" color="tertiary" (click)="onSignUpFragment()">
+                                            <ion-icon slot="start" name="mail-outline"></ion-icon>
+                                            Create account with Email
+                                        </ion-button>
+                                    </div>
+
 
                                 </div>
 

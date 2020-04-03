@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {TestService} from '../../services/test.service';
-import {BookModel} from '../../interfaces/book-model';
-import {Observable} from 'rxjs';
+import {IonInfiniteScroll} from '@ionic/angular';
 
 @Component({
   selector: 'app-test',
@@ -9,30 +9,38 @@ import {Observable} from 'rxjs';
   styleUrls: ['./test.page.scss'],
 })
 export class TestPage implements OnInit {
-  bookObservable: Observable<BookModel[]>;
+  @ViewChild(IonInfiniteScroll, {static: true}) infinite: IonInfiniteScroll;
+  offset = 0;
+  pokemon = [];
 
-  book1: BookModel = {
-    title: 'Humanity',
-    author: 'Ikbal',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, reprehenderit?'
-  };
 
-  constructor(private testService: TestService) { }
+
+  constructor(private pokeService: TestService) {
+  }
+
+
 
   ngOnInit() {
-    this.bookObservable = this.testService.findBooks().valueChanges();
+    this.loadPokemon();
   }
 
-  addNewItem() {
-    const slug = this.book1.title.replace(/\s+/g, '-').toLowerCase();
-    this.testService.createBook(this.book1, slug);
+
+  loadPokemon(loadMore = false, event?) {
+    if (loadMore) {
+      this.offset += 25;
+    }
+
+    this.pokeService.getPokemon(this.offset)
+        .subscribe(res => {
+          this.pokemon = [...this.pokemon, ...res];
+
+          if (event) {
+            event.target.complete();
+          }
+        });
   }
 
-  updateItem() {
-    this.testService.updateBook('Title Changed', 'my-new-book');
-  }
-
-  removeItem() {
-    this.testService.deleteBook('my-new-book');
+  loadPokemons($event: CustomEvent) {
+    console.log('Scrooling....')
   }
 }

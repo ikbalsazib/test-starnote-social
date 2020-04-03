@@ -3,25 +3,30 @@ import { CommonModule } from '@angular/common';
 import {IonicModule} from '@ionic/angular';
 import {FlexModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
-import {LoginFieldComponent} from './login-field/login-field.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SignupFieldComponent} from './signup-field/signup-field.component';
 import {PhoneLoginComponent} from './phone-login/phone-login.component';
 import {ReactionComponent} from './reaction/reaction.component';
 import {UserReactionComponent} from './user-reaction/user-reaction.component';
 import {ProfileShortComponent} from './profile-short/profile-short.component';
-import {MatDialogModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {PostAuthComponent} from './post-auth/post-auth.component';
+import {SharedPipesModule} from '../pipes/shared-pipes.module';
+import {Ng2TelInputModule} from 'ng2-tel-input';
+import {EmailLoginComponent} from './email-login/email-login.component';
 
 
 
 @NgModule({
     declarations: [
-        LoginFieldComponent,
         SignupFieldComponent,
         PhoneLoginComponent,
         ReactionComponent,
         UserReactionComponent,
-        ProfileShortComponent
+        ProfileShortComponent,
+        PostAuthComponent,
+        EmailLoginComponent,
+
     ],
     imports: [
         CommonModule,
@@ -30,15 +35,21 @@ import {MatDialogModule} from '@angular/material';
         IonicModule,
         FlexModule,
         RouterModule,
+        SharedPipesModule,
+        MatFormFieldModule,
+        MatInputModule,
+        Ng2TelInputModule,
     ],
     exports: [
-        LoginFieldComponent,
         SignupFieldComponent,
         PhoneLoginComponent,
         ReactionComponent,
         UserReactionComponent,
         ProfileShortComponent,
-        MatDialogModule
+        PostAuthComponent,
+        MatDialogModule,
+        EmailLoginComponent,
+
     ]
 })
 export class ComponentModule { }

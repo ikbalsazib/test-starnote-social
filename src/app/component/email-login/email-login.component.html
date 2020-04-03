@@ -1,0 +1,24 @@
+<form [formGroup]="emailLoginForm" (ngSubmit)="onEmailLogin()">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="sn-field">
+          <input formControlName="email" type="email" name="email" placeholder="Email">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div><!--sn-field end-->
+        <div class="sn-field">
+          <input formControlName="password" type="password" name="password" placeholder="Password">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </div><!--sn-field end-->
+      </ion-col>
+      <ion-col size="12">
+        <div class="checky-sec">
+          <a (click)="forgetPassword()" title="">Forgot Password?</a>
+        </div>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-button fill="outline" class="ion-float-left" type="submit" color="primary">Sign In</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>

@@ -56,6 +56,17 @@ ion-button {
   font-family: CircularStd, sans-serif;
 }
 
-.verification-input {
-  width: 50%;
+
+// Responsive..
+@media only screen and (max-device-width: 767px) {
+  form {
+    input {
+      width: 100%;
+
+    }
+  }
+
+  .checky-sec {
+    width: 100%;
+  }
 }

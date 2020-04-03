@@ -34,6 +34,7 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/font-awesome/css/font-awesome.css",
+              "./node_modules/intl-tel-input/build/css/intlTelInput.css",
               {
                 "input": "src/theme/variables.scss"
               },
@@ -41,7 +42,9 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/intl-tel-input/build/js/intlTelInput.min.js"
+            ]
           },
           "configurations": {
             "production": {

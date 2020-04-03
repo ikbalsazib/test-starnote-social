@@ -1,0 +1,45 @@
+.slug-text{
+  margin: 20px 0 50px 0;
+  font-family: 'CircularStd', sans-serif;
+  text-align: center;
+  color: #474450;
+  font-size: 16px;
+}
+
+.logo-thumb {
+  margin: 0 auto;
+  width: 150px;
+  height: auto;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.creative-img {
+  width: 100%;
+  height: auto;
+  margin-top: 35px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Responsive..
+@media only screen and (max-device-width: 767px) {
+  .slug-text{
+    margin: 20px 0 50px 0;
+    font-family: 'CircularStd', sans-serif;
+    text-align: center;
+    color: #474450;
+    font-size: 14px;
+  }
+
+  .logo-thumb {
+    width: 110px;
+  }
+
+}
+

@@ -3,22 +3,15 @@ import {auth} from 'firebase/app';
 import {UserModel} from '../interfaces/user-model';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {WindowService} from './window.service';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {merge} from 'rxjs';
+import {UiService} from './ui.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
-  private dbPath = '/Users';
-  userRef: AngularFireList<UserModel> = null;
-  currentUser: any;
-  userData: any;
-  windowRef: any;
-    // private recaptchaVerifier: firebase.auth.RecaptchaVerifier;
-    private sent = false;
 
   constructor(
       private db: AngularFireDatabase,
@@ -26,7 +19,8 @@ export class UserAuthService {
       private router: Router,
       private ngZone: NgZone,
       private windowService: WindowService,
-      private httpClient: HttpClient
+      private httpClient: HttpClient,
+      public uiService: UiService
   ) {
     // Realtime Databases...
     this.userRef = db.list(this.dbPath);
@@ -45,44 +39,96 @@ logged in and setting up null when logged out */
     });
   }
 
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    // return (user !== null && user.emailVerified !== false);
+    return (user !== null);
+  }
+  private dbPath = '/Users';
+  userRef: AngularFireList<UserModel> = null;
+  currentAuthUser: any;
+  userData: any;
+  windowRef: any;
+    // private recaptchaVerifier: firebase.auth.RecaptchaVerifier;
+    private sent = false;
+
+    userInfoo = {
+        name: 'Simon Grimm',
+        website: 'www.ionicacademy.com',
+        address: {
+            zip: 48149,
+            city: 'Muenster',
+            country: 'DE'
+        },
+        interests: [
+            'Ionic', 'Angular', 'YouTube', 'Sports'
+        ]
+    };
+
+
   // Sign in with email/password
   SignIn(email, password) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
-        .then((result) => {
-          if (result.user.emailVerified !== true) {
-            this.SignOut();
-            window.alert('Please verify your email first...');
-            return;
-          }
-          this.ngZone.run(() => {
-            console.log('Login Called');
-            this.router.navigate(['/home']);
-          });
-          // this.SetUserData(result.user);
+        .then((credential) => {
+            if (credential.user.emailVerified !== true) {
+                this.SignOut();
+                this.uiService.hideLoadingBar();
+                this.uiService.showAlertMessage('Email Verification Need!', 'Please verify your email first then login');
+                return;
+            }
+            this.currentAuthUser = credential.user;
+            // this.setAuthUserData(this.currentAuthUser, 'email');
+            this.getUserCompleteFieldData(this.currentAuthUser).valueChanges()
+                .subscribe(info => {
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: {
+                            special: JSON.stringify(info)
+                        }
+                    };
+                    const numberOfField = Object.keys(info).length;
+                    this.uiService.hideLoadingBar();
+                    if (numberOfField < 15) {
+                        this.router.navigate(['profile-completion'], navigationExtras);
+                    } else {
+                        this.ngZone.run(() => {
+                            this.router.navigate(['/']);
+                        });
+                    }
+                });
+
         }).catch((error) => {
-          window.alert(error.message);
+            this.uiService.hideLoadingBar();
+            this.uiService.showAlertMessage('', error.message);
         });
   }
   // Sign up with email/password
   SignUp(email, password) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-          this.SendVerificationMail();
-          if (result.user.emailVerified !== true) {
-            this.SignOut();
-          }
-          // this.SetUserData(result.user);
+        .then((credential) => {
+            // Set User Data...
+            this.currentAuthUser = credential.user;
+            this.setAuthUserData(this.currentAuthUser, 'email');
+            this.uiService.hideLoadingBar();
+
+            // Sent Verification mail..
+            this.SendVerificationMail();
+            if (credential.user.emailVerified !== true) {
+                this.SignOut();
+            }
+            // this.SetUserData(result.user);
         }).catch((error) => {
-          window.alert(error.message);
-        });
+        this.uiService.hideLoadingBar();
+        this.uiService.showAlertMessage('', error.message);
+    });
   }
 
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     this.afAuth.auth.currentUser.sendEmailVerification()
         .then(() => {
-          this.router.navigate(['/login']);
-          window.alert('Please verify your email first..');
+            this.uiService.showAlertMessage('Email Verification Need!', 'Please verify your email first then login');
+            this.router.navigate(['/login']);
         });
   }
 
@@ -90,22 +136,17 @@ logged in and setting up null when logged out */
   ForgotPassword(passwordResetEmail) {
     return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
         .then(() => {
-          window.alert('Password reset email sent, check your inbox.');
+         this.uiService.showToastMessage('Password reset email sent, check your inbox.');
         }).catch((error) => {
-          window.alert(error);
+          this.uiService.showAlertMessage('Error', error.message);
         });
   }
 
-  // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    // return (user !== null && user.emailVerified !== false);
-    return (user !== null);
-  }
-
-  setAuthUserData(user) {
+  setAuthUserData(user, regWith) {
       if (!user) { return; }
+      // console.log(user);
       const path = `Users/${user.uid}`;
+      // const type = user.providerData.map(data => data.providerId);
       // let iPAddress;
       // this.getUserIPAddress().subscribe(info => iPAddress = info.ip);
       const userData: any = {
@@ -117,7 +158,7 @@ logged in and setting up null when logged out */
           // phone: '',
           // points: '',
           role: 'user',
-          // registrationType: '',
+          registrationType: regWith,
           registeredTime: Date.now(),
           // referCode: '',
           // referable: '',
@@ -131,156 +172,89 @@ logged in and setting up null when logged out */
 
     setUserExtraData(newData: any) {
         // const data = { [this.userData.uid]: newData };
-        this.db.object(`Users/${this.userData.uid}`).update(newData);
+        return this.db.object(`Users/${this.userData.uid}`).update(newData);
     }
 
-    getUserCompleteFieldData(userID) {
-      return this.db.object(`Users/${userID}`);
+    getUserCompleteFieldData(user) {
+      return this.db.object(`Users/${user.uid}`);
+    }
+
+    // Sign in with Google
+    GoogleAuth() {
+        return this.AuthLogin(new auth.GoogleAuthProvider(), 'google');
+    }
+    // Sign in with Facebook
+    FacebookAuth() {
+        return this.AuthLogin(new auth.FacebookAuthProvider(), 'facebook');
+    }
+
+
+    // Auth logic to run auth providers
+    AuthLogin(provider, regWith) {
+        return this.afAuth.auth.signInWithPopup(provider)
+            .then((credential) => {
+
+                // this.router.navigate(['messages'], navigationExtras);
+                this.currentAuthUser = credential.user;
+                this.setAuthUserData(this.currentAuthUser, regWith);
+                this.getUserCompleteFieldData(this.currentAuthUser).valueChanges()
+                    .subscribe(info => {
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                special: JSON.stringify(info)
+                            }
+                        };
+                        const numberOfField = Object.keys(info).length;
+                        if (numberOfField < 15) {
+                           this.router.navigate(['profile-completion'], navigationExtras);
+                       } else {
+                            this.ngZone.run(() => {
+                                this.router.navigate(['/']);
+                            });
+                        }
+                    });
+                // this.SetUserData(result.user);
+            }).catch((error) => {
+                window.alert(error);
+            });
+    }
+
+    // Sign out
+    SignOut() {
+        this.afAuth.auth.signOut().then(() => {
+            localStorage.removeItem('user');
+            this.router.navigate(['/login']);
+        });
+    }
+
+    loggedInUserInfo() {
+        return this.userData;
     }
 
     getUserIPAddress() {
         return this.httpClient.get<any>('http://api.ipify.org/?format=json');
     }
 
+    getNewLoggedInStatus(userID) {
+        this.db.object(`Users/${userID}`);
+    }
 
-  // SetUserData(user) {
-  //   const userData: UserModel = {
-  //     uid: user.uid,
-  //     email: user.email,
-  //     displayName: user.displayName,
-  //     photoURL: user.photoURL
-  //   };
-  //   this.userRef.push(userData);
-  // }
-
-  // // Phone Sign In...
-  //   PhoneAuth(phoneNum, appVerifier) {
-  //       firebase.auth().signInWithPhoneNumber(phoneNum, appVerifier)
-  //           .then((confirmationResult) => {
-  //               this.sent = true;
-  //               const verification = prompt('Enter verification code');
-  //               if (verification != null) {
-  //                   console.log(verification);
-  //                   confirmationResult.confirm(verification)
-  //                       .then((good) => {
-  //                           // all checks out
-  //                       })
-  //                       .catch((bad) => {
-  //                           // code verification was bad.
-  //                       });
-  //               } else {
-  //                   console.log('No verification code entered');
-  //               }
-  //           })
-  //           .catch((err) => {
-  //               console.log('sms not sent', err);
-  //           });
-  //   }
-
-  // Sign in with Google
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
-  }
-  // Sign in with Facebook
-  FacebookAuth() {
-    return this.AuthLogin(new auth.FacebookAuthProvider());
-  }
-
-
-  // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-        .then((credential) => {
-            const user = credential.user;
-            this.setAuthUserData(user);
+    myTestService() {
+        const isF = true;
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                special: JSON.stringify(this.userInfoo)
+            }
+        };
+        if (isF) {
+            this.router.navigate(['profile-completion'], navigationExtras);
+        } else {
             this.ngZone.run(() => {
-            this.router.navigate(['/home']);
-          });
-          // this.SetUserData(result.user);
-        }).catch((error) => {
-          window.alert(error);
-        });
-  }
+                this.router.navigate(['/']);
+            });
+        }
 
-  // Sign out
-  SignOut() {
-    this.afAuth.auth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['/login']);
-    });
-  }
-
-  loggedInUserInfo() {
-      return this.userData;
-  }
-
-
-
-
-
-  // createCustomer(user: UserModel): void {
-  //   this.userRef.push(user);
-  // }
-  //
-  //
-  // getUsersList(): AngularFireList<UserModel> {
-  //   return this.userRef;
-  // }
-  //
-  // deleteUser(key: string): Promise<void> {
-  //   return this.userRef.remove(key);
-  // }
-  //
-  // // Sign up with email/password
-  // userEmailSignUp(user: UserModel) {
-  //   return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
-  //       .then((userCredential) => {
-  //           this.newUser = user;
-  //           this.newUser.uid = userCredential.user.uid;
-  //
-  //           const data: UserModel = {
-  //               uid: userCredential.user.uid,
-  //               email: this.newUser.email,
-  //               password: this.newUser.password,
-  //               name: 'Sazib',
-  //               photoURL: ''
-  //           };
-  //           this.createUserDatabase(data);
-  //
-  //           this.sendVerificationMail();
-  //       }).catch((error) => {
-  //           window.alert(error.message);
-  //       });
-  // }
-  //
-  // createUserDatabase(user: UserModel): void {
-  //   this.userRef.push(user);
-  // }
-  //
-  //   // Send email verification when new user sign up
-  //   sendVerificationMail() {
-  //     return this.afAuth.auth.currentUser.sendEmailVerification()
-  //         .then(() => {
-  //             this.router.navigate(['/login']);
-  //             window.alert('Please validate your email address. Kindly check your inbox.');
-  //         });
-  //   }
-  //
-  //   // Sign in with email/password
-  //   userEmailSignIn(email, password) {
-  //       return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-  //           .then((result) => {
-  //               if (result.user.emailVerified !== true) {
-  //                   this.sendVerificationMail();
-  //                   window.alert('Please validate your email address. Kindly check your inbox.');
-  //               } else {
-  //                   // this.router.navigate(['<!-- enter your route name here -->']);
-  //               }
-  //               // this.createUserDatabase(result.user);
-  //           }).catch((error) => {
-  //               window.alert(error.message);
-  //           });
-  //   }
+    }
 
 
 }

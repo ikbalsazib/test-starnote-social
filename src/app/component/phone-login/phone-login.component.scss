@@ -2,12 +2,24 @@ input {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  width: 300px;
+  max-width: 300px;
   padding: 0 15px 0 40px;
   color: #6d6d6d;
   font-size: 14px;
   border: 1px solid #C2C2C2;
   height: 40px;
+}
+
+.inputError {
+  border: 1px solid darkred;
+}
+
+::placeholder {
+  color: #BBBBBB;
+}
+
+input[type=number] {
+  padding-left: 100px;
 }
 
 .full-width {
@@ -20,6 +32,7 @@ input {
 }
 
 .sn-field > ion-icon {
+  margin-left: 50px;
   position: absolute;
   top: 50%;
   left: 15px;
@@ -30,6 +43,10 @@ input {
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+.left-key-icon {
+  margin-left: 0 !important;
 }
 
 .checky-sec {
@@ -44,6 +61,14 @@ input {
   }
 }
 
+.verify-area {
+  margin-top: 15px;
+}
+
+.send-code-btn {
+  margin-top: 10px;
+}
+
 .signin-btn {
   width: 100%;
   margin-top: 35px;
@@ -56,4 +81,21 @@ ion-button {
 
 .verification-input {
   width: 50%;
+}
+
+#recaptcha-container {
+  transform: scale(0.9);
+  transform-origin: 0 0;
+}
+
+// Responsive..
+@media only screen and (max-device-width: 767px) {
+  input {
+    width: 95%;
+  }
+
+  #recaptcha-container {
+    transform: scale(0.7);
+    transform-origin: 0 0;
+  }
 }

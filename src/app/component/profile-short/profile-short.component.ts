@@ -2,7 +2,8 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserAuthService} from '../../services/user-auth.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 const USER = JSON.parse(localStorage.getItem('user'));
 
@@ -12,6 +13,9 @@ const USER = JSON.parse(localStorage.getItem('user'));
   styleUrls: ['./profile-short.component.scss'],
 })
 export class ProfileShortComponent implements OnInit, OnDestroy {
+  userId: any;
+  user: any;
+  user$: Observable<any>;
   subscription: Subscription;
   @ViewChild('dialougeTemplate', { static: true }) dialougeTemplate: any;
   reactiveForm: FormGroup;
@@ -24,15 +28,24 @@ export class ProfileShortComponent implements OnInit, OnDestroy {
   email = new FormControl(null, {validators: [Validators.email]});
   address = new FormControl(null);
 
-  constructor(private userAuthService: UserAuthService, private matDialog: MatDialog) { }
+  constructor(
+      private userAuthService: UserAuthService,
+      private afAuth: AngularFireAuth,
+      private matDialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    if (USER) {
-      this.subscription = this.userAuthService.getUserCompleteFieldData(USER.uid).valueChanges()
-          .subscribe(completedData => {
-            this.userCompletedInfo = completedData;
-          });
-    }
+    this.afAuth.authState.subscribe((auth) => {
+      if (auth) {
+        this.userId = auth;
+        this.user$ = this.userAuthService.getUserCompleteFieldData(this.userId).valueChanges();
+      }
+    });
+    // this.subscription = this.userAuthService.getUserCompleteFieldData(this.userId).valueChanges()
+    //     .subscribe(completedData => {
+    //       console.log(completedData);
+    //       this.userCompletedInfo = completedData;
+    //     });
 
     this.reactiveForm = new FormGroup(
         {
@@ -70,7 +83,7 @@ export class ProfileShortComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
 }

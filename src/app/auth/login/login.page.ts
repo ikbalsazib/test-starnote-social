@@ -1,68 +1,77 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {UserAuthService} from '../../services/user-auth.service';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {UiService} from '../../services/ui.service';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   // Fragment...
-  isLoginFragment = true;
+  isPhoneLoginFragment = true;
+  isLoginEmailFragment = false;
   isSignUpFragment = false;
 
-  usersList: any;
-  reactiveForm: FormGroup;
+  // Responsive..
+  mobileQuery: MediaQueryList;
+  ionMenuIsOpened: boolean;
+  private mobileQueryListener: () => void;
 
-  email = new FormControl(null, {validators: [Validators.required, Validators.email]});
-  password = new FormControl(null, {validators: [Validators.required]});
 
 
-  constructor(private userAuthService: UserAuthService) { }
+  constructor(
+      private userAuthService: UserAuthService,
+      private changeDetectorRef: ChangeDetectorRef,
+      private media: MediaMatcher,
+      public menuCtrl: MenuController
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 699px)');
+    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this.mobileQueryListener);
+  }
+
+  // ionViewWillEnter() {
+  //   this.menuCtrl.enable(false);
+  // }
 
   ngOnInit() {
-    // this.getUsersList();
-    // this.authService.initAuthListener();
-    this.reactiveForm = new FormGroup({
-      email: this.email,
-      password: this.password
-    });
+    this.menuCtrl.enable(false);
   }
 
-  getUsersList() {
-    // this.userService.getUsersList().snapshotChanges().pipe(
-    //     map(changes =>
-    //         changes.map(c =>
-    //             ({ key: c.payload.key, ...c.payload.val() })
-    //         )
-    //     )
-    // ).subscribe(users => {
-    //   this.usersList = users;
-    // });
-  }
-
-  removeUser(key: any) {
-    // this.userService.deleteUser(key)
-    //     .then(() => console.log('Success'));
-  }
 
   // Fragment Logic.....
-  onLoginFragment() {
-    this.isLoginFragment = true;
+  onPhoneLoginFragment() {
+    this.isPhoneLoginFragment = true;
+    this.isLoginEmailFragment = false;
+    this.isSignUpFragment = false;
+  }
+
+  onEmailLoginFragment() {
+    this.isPhoneLoginFragment = false;
+    this.isLoginEmailFragment = true;
     this.isSignUpFragment = false;
   }
 
   onSignUpFragment() {
-    this.isLoginFragment = false;
+    this.isPhoneLoginFragment = false;
+    this.isLoginEmailFragment = false;
     this.isSignUpFragment = true;
   }
 
-    onGoogleAuth() {
-        this.userAuthService.GoogleAuth();
-    }
+  onGoogleAuth() {
+    this.userAuthService.GoogleAuth();
+  }
 
   onFacebookAuth() {
     this.userAuthService.FacebookAuth();
   }
+
+  ngOnDestroy(): void {
+    this.menuCtrl.enable(true);
+    this.mobileQuery.removeListener(this.mobileQueryListener);
+  }
+
 }

@@ -1,0 +1,47 @@
+<ion-header>
+  <star-toolbar></star-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button (click)="onAdd()">Add New</ion-button>
+
+<!--  <ion-list>-->
+<!--    <ion-item *ngFor="let book of movies | async;">-->
+<!--&lt;!&ndash;      <ion-avatar slot="start">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img [src]="poke.image" style="background: #F2F2F2;">&ndash;&gt;-->
+<!--&lt;!&ndash;      </ion-avatar>&ndash;&gt;-->
+<!--      <ion-label class="ion-text-capitalize">-->
+<!--        <h2>{{ book.title }}</h2>-->
+<!--&lt;!&ndash;        <p>#{{ poke.pokeIndex }}</p>&ndash;&gt;-->
+<!--      </ion-label>-->
+<!--    </ion-item>-->
+<!--  </ion-list>-->
+
+<!--  <ion-infinite-scroll (ionInfinite)="getMovies(true, $event)">-->
+<!--    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more Pokemon...">-->
+<!--    </ion-infinite-scroll-content>-->
+<!--  </ion-infinite-scroll>-->
+
+
+    <ion-card *ngFor="let post of movies  | async">
+        <ion-card-header>
+            {{post.title }}
+        </ion-card-header>
+        <ion-card-content>
+            <p>
+                {{ post.author }}
+            </p>
+        </ion-card-content>
+        <!--<div class="flag-post" (click)="postsProvider.flagPost(post.postId)">
+            <ion-icon name="flag"></ion-icon>
+        </div>-->
+    </ion-card>
+    <ion-infinite-scroll (ionInfinite)="loadPokemons($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more Pokemon...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <ion-button (click)="loadPokemons()">Load More</ion-button>
+
+</ion-content>

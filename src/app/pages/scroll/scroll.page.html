@@ -1,0 +1,37 @@
+<ion-header>
+  <star-toolbar></star-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-button (click)="onAdd()">Add</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let post of postList | reverse">
+      <h5>{{post.title}}</h5>
+      <p>{{lastId}}</p>
+      <p>{{finishedLoading}}</p>
+    </ion-item>
+  </ion-list>
+<!--  <ion-list>-->
+<!--    <ion-item>-->
+<!--      <h4>Heloo</h4>-->
+<!--    </ion-item>-->
+<!--    <ion-item *ngFor="let movie of movies$ | async">-->
+<!--      {{ movie.title }} | {{ movie.year }}-->
+<!--    </ion-item>-->
+<!--  </ion-list>-->
+
+  <ion-infinite-scroll *ngIf="this.finishedLoading !== true" (ionInfinite)="onInfiniteScroll($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+<!--  <ion-infinite-scroll (ionInfinite)="loadMore($event)">-->
+<!--    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more Pokemon...">-->
+<!--    </ion-infinite-scroll-content>-->
+<!--  </ion-infinite-scroll>-->
+
+<!--  <ion-button (click)="loadMore()">Load</ion-button>-->
+
+</ion-content>

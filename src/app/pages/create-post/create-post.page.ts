@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {concatMap, last} from 'rxjs/operators';
-import * as moment from 'moment';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {UiService} from '../../services/ui.service';
 import {PostModel} from '../../interfaces/post-model';

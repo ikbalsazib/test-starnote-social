@@ -1,41 +1,56 @@
 <div>
 
-  <form [formGroup]="phoneLoginForm">
-    <ion-grid>
+  <form>
+    <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size="12">
+
           <div class="sn-field">
-            <input formControlName="phone" type="text" name="phone" placeholder="Phone No" value="+880">
-            <ion-icon name="call-outline"></ion-icon>
-          </div><!--sn-field end-->
+            <input
+                    type="number"
+                    ng2TelInput
+                    [ng2TelInputOptions]="{initialCountry: 'bd'}"
+                    (ng2TelOutput)="getNumber($event)"
+                    (hasError)="hasError($event)" />
+            <ion-icon class="left-icon" name="call-outline"></ion-icon>
+          </div>
+
         </ion-col>
+
       </ion-row>
     </ion-grid>
   </form>
 
 
-  <hr>
-
   <div id="recaptcha-container"></div>
 
-  <hr>
 
-  <ion-button class="button is-info" (click)="sendLoginCode()">Send Verification Code</ion-button>
-
-  <div *ngIf="windowRef.confirmationResult">
-    <div class="sn-field">
-      <input type="text" name="code" [(ngModel)]="verificationCode" class="input" placeholder="Enter your Verification Code Here">
-    </div>
-
-    <ion-button class="button is-success" (click)="verifyLoginCode()">Login</ion-button>
+  <div class="send-code-btn" *ngIf="!windowRef.confirmationResult">
+    <ion-button fill="outline" color="medium" class="button is-info" (click)="sendLoginCode()">Send Verification Code</ion-button>
   </div>
 
+  <ion-grid *ngIf="windowRef.confirmationResult" class="ion-no-padding verify-area">
+    <ion-row>
+      <ion-col size="12">
+        <div class="sn-field">
+          <input type="text" name="code" [(ngModel)]="verificationCode" class="input" placeholder="Enter Verification Code..">
+          <ion-icon class="left-key-icon" name="key"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button fill="outline" class="button is-success ion-float-right" (click)="verifyLoginCode()">Login</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </div>
+
 
 
 <!--<div *ngIf="user">-->
 
 <!--  <div class="notification is-success">You have successfully logged in with your phone number!</div>-->
+<!--  {{user | json}}-->
 
 <!--  UserId: {{ user?.uid }}-->
 

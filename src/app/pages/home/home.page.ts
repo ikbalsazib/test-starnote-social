@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
-import {combineLatest, Observable, of, Subscription} from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {Subscription} from 'rxjs';
 import {UserAuthService} from '../../services/user-auth.service';
-import {map, switchMap} from 'rxjs/operators';
-import {PostModel} from '../../interfaces/post-model';
-import { uniq } from 'lodash';
-import {UserModel} from '../../interfaces/user-model';
-import {CombinedPostModel} from '../../interfaces/combined-post-model';
+import {map, take} from 'rxjs/operators';
+import * as _ from 'lodash';
+import {Router} from '@angular/router';
+import {UserPostService} from '../../services/user-post.service';
+import {IonInfiniteScroll} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,71 +15,89 @@ import {CombinedPostModel} from '../../interfaces/combined-post-model';
 })
 export class HomePage implements OnInit, OnDestroy {
   private subscription: Subscription;
-  // postsList: PostModel[];
-  userRef: AngularFireList<UserModel> = null;
-  postRef: AngularFireList<PostModel> = null;
-  combinedPosts$: Observable<any>;
+  @ViewChild(IonInfiniteScroll, {static: true}) infinite: IonInfiniteScroll;
+  limit = 2;
+  postList: any;
+  lastId: any;
+  finishedLoading = false;
 
   constructor(
       private db: AngularFireDatabase,
       private userAuthService: UserAuthService,
-      // private userPostService: UserPostService
+      private router: Router,
+      private userPostService: UserPostService
   ) { }
 
   ngOnInit() {
-      this.getCombinedPosts();
+      this.getLastPostKey();
+      this.getReasonsPosts();
   }
 
-  getCombinedPosts() {
-      const queryUser = (authorId) => {
-          return this.userRef = this.db.list('Users', ref => ref.orderByChild('uID').equalTo(authorId));
-      };
+    /*
+  * New Method of Infinity Scroll...
+  * Load Data from Angular Firebase Database
+  * Pull to Refresh Added
+  * Testing Mood
+   */
 
-      this.postRef = this.db.list('Posts');
+  onInfiniteScroll(event) {
+    console.log('Infinity Scroll started');
+    this.limit += 2; // or however many more you want to load
+    setTimeout(() => {
+      this.getReasonsPosts();
+      console.log('Infinity Scroll has ended');
+      event.target.complete();
+    }, 1000);
+  }
 
-      this.combinedPosts$ = this.postRef.valueChanges().pipe(
-          switchMap(blogPosts => {
-              const authorIds = uniq(blogPosts.map(bp => bp.authorID));
-              const postIds = uniq(blogPosts.map(bp => bp.postID));
+  doRefresh(refresher?) {
+    console.log('Begin async Refresher', refresher);
+    this.finishedLoading = false;
+    setTimeout(() => {
+      this.getReasonsPosts();
+      console.log('Async Refresher ended');
+      if (refresher) {
+        refresher.target.complete();
+      }
+    }, 1000);
+  }
 
-              return combineLatest(
-                  of(blogPosts),
-                  combineLatest(
-                      authorIds.map(
-                          authorId => queryUser(authorId)
-                              .valueChanges().pipe(map(authors => authors[0]))
-                      )
-                  )
-              );
-          }), map(([blogPosts, authors]) => {
-              return blogPosts.map(blogPost => {
-                  return {
-                      ...blogPost,
-                      // @ts-ignore
-                      author: authors.find(a => a.uID === blogPost.authorID)
-                  };
-              });
-          })
-      );
+  getLastPostKey() {
+    this.userPostService.getLastId().snapshotChanges()
+        .pipe(map(datas => datas.map(data => data.key)))
+        .subscribe(key => this.lastId = key);
+  }
+
+  getReasonsPosts() {
+    this.subscription = this.userPostService.getPosts(this.limit).snapshotChanges()
+        .pipe(
+            map(datas => datas.map(data => ({ key: data.key, ...data.payload.val() }))),
+            take(1)
+        )
+        .subscribe(keyData => {
+          // Check New Post Added!!
+          this.userPostService.isNewPostAdded.subscribe((data) => {
+            if (data === true) {
+              this.doRefresh();
+            }
+          });
+
+          // Check Last Key...
+          const lastKeyMap = keyData.map(data => data.key);
+          const isLast = _.includes(lastKeyMap, this.lastId[0]);
+          if (isLast) {
+            this.finishedLoading = true;
+            console.log('Finished...');
+          }
+
+          // Retrieve Post...
+          this.postList = keyData;
+        });
   }
 
 
-    //   getPostsList() {
-    //       this.userPostService.getUserPostsList().snapshotChanges().pipe(
-    //           map(blogPosts =>
-    //               blogPosts.map(c => {
-    //                       return ({ key: c.payload.key, ...c.payload.val() });
-    //                   }
-    //               ),
-    //           )
-    //       ).subscribe(result => this.postsList = result);
-    //
-    //       // this.joined$ = this.db.list('users', ref => {
-    //       //   return ref.orderByChild('uID').equalTo('LNbnswBXzpPFu1kyAqZ19NaFkIf1');
-    //       // }).valueChanges();
-    //   }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
-    ngOnDestroy(): void {
-        // this.subscription.unsubscribe();
-    }
 }

@@ -18,6 +18,8 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {UserAuthService} from './services/user-auth.service';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {HttpClientModule} from '@angular/common/http';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {Ng2TelInputModule} from 'ng2-tel-input';
 
 @NgModule({
     declarations: [AppComponent],
@@ -32,7 +34,9 @@ import {HttpClientModule} from '@angular/common/http';
         AngularFireAuthModule,
         AngularFireStorageModule,
         HttpClientModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        InfiniteScrollModule,
+        Ng2TelInputModule,
     ],
     providers: [
         StatusBar,
