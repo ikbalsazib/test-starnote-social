@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Subscription} from 'rxjs';
 import {UserAuthService} from '../../services/user-auth.service';
@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import {Router} from '@angular/router';
 import {UserPostService} from '../../services/user-post.service';
 import {IonInfiniteScroll} from '@ionic/angular';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,10 @@ import {IonInfiniteScroll} from '@ionic/angular';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
+  // Media Query..
+  mobileQuery: MediaQueryList;
+  private mobileQueryListener: () => void;
+
   private subscription: Subscription;
   @ViewChild(IonInfiniteScroll, {static: true}) infinite: IonInfiniteScroll;
   limit = 2;
@@ -22,11 +27,18 @@ export class HomePage implements OnInit, OnDestroy {
   finishedLoading = false;
 
   constructor(
+      private changeDetectorRef: ChangeDetectorRef,
+      private media: MediaMatcher,
       private db: AngularFireDatabase,
       private userAuthService: UserAuthService,
       private router: Router,
       private userPostService: UserPostService
-  ) { }
+  ) {
+    // Media Query...
+    this.mobileQuery = media.matchMedia('(max-width: 767px)');
+    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this.mobileQueryListener);
+  }
 
   ngOnInit() {
       this.getLastPostKey();
@@ -98,6 +110,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.mobileQuery.removeListener(this.mobileQueryListener);
   }
 
 }

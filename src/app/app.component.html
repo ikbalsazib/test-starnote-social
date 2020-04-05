@@ -1,35 +1,21 @@
 <ion-app>
-  <ion-menu side="start" menuId="custom" contentId="my-content">
+  <ion-menu
+          class="side-menu"
+          side="start"
+          menuId="main"
+          contentId="my-content"
+          [swipeGesture]="mobileQuery.matches">
+
     <ion-header>
       <ion-toolbar>
-        <ion-title>SoftLab IT</ion-title>
+        <ion-title>Starnote Social</ion-title>
       </ion-toolbar>
     </ion-header>
+
     <ion-content>
-      <ion-list>
-
-        <ion-menu-toggle *ngFor="let p of pages">
-          <ion-item lines="none" [routerLink]="p.url" routerDirection="root" [class.active-item]="selectedPath === p.url">
-            <ion-icon [name]="p.icon" slot="start"></ion-icon>
-            <ion-label>{{p.title}}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-        <ion-item-divider></ion-item-divider>
-
-
-        <ul class="view-on-mobile" fxHide.gt-xs="true">
-          <ion-menu-toggle *ngFor="let p of buttonLinks">
-            <li>
-              <ion-button [routerLink]="p.url" fill="outline" [class.active-item-btn]="selectedPath === p.url">
-                <ion-icon slot="icon-only" [name]="p.icon"></ion-icon>
-                {{p.title}}
-              </ion-button>
-            </li>
-          </ion-menu-toggle>
-        </ul>
-
-      </ion-list>
+      <app-mobile-sidebar-content></app-mobile-sidebar-content>
     </ion-content>
+
   </ion-menu>
 
   <ion-router-outlet  id="my-content" ></ion-router-outlet>

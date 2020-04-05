@@ -14,6 +14,7 @@ import {PostAuthComponent} from './post-auth/post-auth.component';
 import {SharedPipesModule} from '../pipes/shared-pipes.module';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import {EmailLoginComponent} from './email-login/email-login.component';
+import {TextBackgroundComponent} from './text-background/text-background.component';
 
 
 
@@ -26,6 +27,7 @@ import {EmailLoginComponent} from './email-login/email-login.component';
         ProfileShortComponent,
         PostAuthComponent,
         EmailLoginComponent,
+        TextBackgroundComponent
 
     ],
     imports: [
@@ -49,6 +51,7 @@ import {EmailLoginComponent} from './email-login/email-login.component';
         PostAuthComponent,
         MatDialogModule,
         EmailLoginComponent,
+        TextBackgroundComponent
 
     ]
 })

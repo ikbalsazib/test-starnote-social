@@ -1,20 +1,46 @@
 
-<!--<ion-button (click)="react(true)" [class.btn-liked]="userReaction != null">Like</ion-button>-->
-<!--    <div>-->
 
-<!--      <span *ngIf="hasReactions(val)">-->
-<!--        {{ reactionCount[val] }}-->
-<!--      </span>-->
-<!--    </div>-->
+<div class="reaction-bottom">
+    <ion-grid>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="12" *ngIf="hasReactions(val)">
+                <div class="count-top">
+                    <div class="like-count ion-float-left">
+                        <img class="icon" style="width: 18px;" src="../../../assets/icon/ic_star_filled.svg" alt="">
+<!--                        <ion-icon class="icon" name="star" color="primary"></ion-icon>-->
+                        <span>{{reactionCount[val]}}</span>
+                    </div>
+                    <div class="comment-count ion-float-right">
+                        <span>10 Comments</span>
+                    </div>
+                </div>
+            </ion-col>
 
-<div class="job-status-bar">
-    <ul class="like-com">
-        <li>
-            <a (click)="react(true)" [class.active]="userReaction != null"><i class="fa fa-heart"></i> Like</a>
-            <!--                    <img src="../../../assets/images/liked-img.png" alt="">-->
-            <span *ngIf="hasReactions(val)">{{ reactionCount[val] }} </span>
-        </li>
-        <li><a href="#" title="" class="com"><img src="../../../assets/images/com.png" alt=""> Comment 15</a></li>
-    </ul>
+            <ion-col size="4" class="ion-text-center">
+                <div class="block-btn" (click)="react(true)">
+                    <img *ngIf="userReaction == null" class="icon" style="width: 19px; top: 2px;" src="../../../assets/icon/ic_star_outline.svg" alt="">
+                    <img *ngIf="userReaction != null" class="icon" style="width: 19px; top: 2px;" src="../../../assets/icon/ic_star_filled.svg" alt="">
+<!--                    <ion-icon class="icon" color="primary" [name]="userReaction != null ? 'star' :'star-outline'"></ion-icon>-->
+                    <span>Star</span>
+                </div>
+            </ion-col>
 
+            <ion-col size="4" class="ion-text-center">
+                <div class="block-btn">
+                    <ion-icon class="icon" name="chatbox-outline"></ion-icon>
+                    <span>Comment</span>
+                </div>
+            </ion-col>
+
+            <ion-col size="4" class="ion-text-center">
+                <div class="block-btn">
+                    <ion-icon class="icon" name="share-social-outline"></ion-icon>
+                    <span>Share</span>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </div>
+
+
+

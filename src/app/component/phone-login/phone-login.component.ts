@@ -63,6 +63,8 @@ export class PhoneLoginComponent implements OnInit {
             return;
         }
 
+        console.log(this.phoneNumber);
+
 
         firebase.auth()
             .signInWithPhoneNumber(this.phoneNumber, appVerifier)

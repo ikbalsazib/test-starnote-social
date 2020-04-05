@@ -12,7 +12,7 @@
 <!--    <ion-button (click)="loadMore()">Load</ion-button>-->
     <ion-grid>
       <ion-row>
-        <ion-col class="left-area" size="3">
+        <ion-col *ngIf="!mobileQuery.matches" class="left-area" size="12" size-md="3">
 
           <profile-short-view></profile-short-view>
 
@@ -70,11 +70,9 @@
             </div>
           </div><!--user-data end-->
 
+        </ion-col> <!--END of Left Sidebar-->
 
-
-        </ion-col>
-
-        <ion-col class="main" size="6">
+        <ion-col class="main" size="12" size-md="6">
           <div class="post-topbar" routerLink="/create-post">
             <div class="user-picy">
               <img src="../../../assets/images/girl.jpeg" alt="">
@@ -91,7 +89,7 @@
           </div><!--post-topbar end-->
           <!-- *ngIf="combinedPosts$ | async; else loading; let posts" -->
 
-          <ion-button (click)="doRefresh()">Refresh</ion-button>
+<!--          <ion-button (click)="doRefresh()">Refresh</ion-button>-->
 
           <div class="posts-section">
 <!--            {{combinedPosts$ | async | json}}-->
@@ -100,11 +98,12 @@
               <post-auth [authorID]="post.authorID" [postDate]="post.date"></post-auth>
               <!-- Main Post View -->
               <div class="post-view">
-                <div class="text-view" *ngIf="post.postDescription">
-                  <p> {{post.postDescription}}...<span>Read More</span></p>
+                <app-text-background *ngIf="post.postDescription && !post.postThumbnail" [textOnly]="post.postDescription"></app-text-background>
+                <div class="text-view" *ngIf="post.postDescription && post.postThumbnail">
+                  <p> {{post.postDescription}}</p>
                 </div>
-                <div class="image-view" *ngIf="post.postThumbnail">
-                  <img [src]="post.postThumbnail" [alt]="post.postDescription">
+                <div class="image-view" *ngIf="post.postImage">
+                  <img [src]="post.postImage" [alt]="'[Image Thumbnail]'">
                 </div>
               </div>
               <!-- Reaction Bottom -->
@@ -116,9 +115,9 @@
             </ion-infinite-scroll>
 
           </div>
-        </ion-col>
+        </ion-col> <!-- END of News Feed -->
 
-        <ion-col size="3" class="right-area">
+        <ion-col size="12" size-md="3" class="right-area" *ngIf="!mobileQuery.matches">
           <div class="widget widget-about">
             <img src="../../../assets/images/starnote_social_icon_logo.jpg" alt="">
             <h3>Your Day with Starnote Social</h3>
@@ -145,11 +144,9 @@
                 <span>5</span>
               </div>
             </div>
-          </div><!--widget-about end-->
+          </div>
 
-
-
-        </ion-col>
+        </ion-col><!--END of Right Sidebar-->
 
       </ion-row>
     </ion-grid>

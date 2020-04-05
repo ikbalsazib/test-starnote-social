@@ -1,0 +1,9 @@
+<div *ngIf="textOnly.length < 150 ||  textOnly.length == 150" class="text-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="only-text">
+    {{textOnly}}
+  </div>
+</div>
+
+<div *ngIf="textOnly.length > 150 " class="text-view">
+  <p> {{textOnly}}</p>
+</div>

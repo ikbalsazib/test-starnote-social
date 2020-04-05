@@ -4,12 +4,14 @@ import {IonicModule} from '@ionic/angular';
 import {ExtendedModule, FlexModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
 import {PopoverContentComponent} from './popover-content/popover-content.component';
+import {MobileSidebarContentComponent} from './mobile-sidebar-content/mobile-sidebar-content.component';
 
 
 
 @NgModule({
     declarations: [
-        PopoverContentComponent
+        PopoverContentComponent,
+        MobileSidebarContentComponent
     ],
     imports: [
         CommonModule,
@@ -19,7 +21,8 @@ import {PopoverContentComponent} from './popover-content/popover-content.compone
         ExtendedModule
     ],
     exports: [
-        PopoverContentComponent
+        PopoverContentComponent,
+        MobileSidebarContentComponent
     ]
 })
 export class CoreModule { }

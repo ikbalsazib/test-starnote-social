@@ -7,6 +7,7 @@ import {UserModel} from '../interfaces/user-model';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Movie} from '../interfaces/movie-model';
 import {map, tap} from 'rxjs/operators';
+import {error} from 'util';
 
 const DB_PATH = '/Posts';
 
@@ -80,11 +81,15 @@ export class UserPostService {
 
   createNewPost(post: PostModel) {
     const postRefWithId = this.postRef.push(post);
-    postRefWithId.update({ postID: postRefWithId.key }).then(() => {
+    postRefWithId.update({ postID: postRefWithId.key })
+        .then(() => {
         this.isNewPostAdded.next(true);
         this.uiService.hideLoadingBar();
         this.router.navigate(['/']);
         this.uiService.showToastMessage('Successfully Added your post');
+    }).catch(err => {
+        this.uiService.hideLoadingBar();
+        this.uiService.showToastMessage('Something went wrong.');
     });
     // this.postRef.push(post).then(() => {
     //   this.uiService.hideLoadingBar();

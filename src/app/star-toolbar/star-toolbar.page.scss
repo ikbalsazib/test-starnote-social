@@ -110,16 +110,16 @@ li a:hover {
 }
 
 
-@media only screen and (max-device-width: 699px) {
-  .containers {
-    width: 100%;
-  }
-
-  .logo {
-    h4 {
-      font-size: 26px;
-    }
-  }
+@media only screen and (max-device-width: 767px) {
+  //.containers {
+  //  width: 100%;
+  //}
+  //
+  //.logo {
+  //  h4 {
+  //    font-size: 26px;
+  //  }
+  //}
 }
 
 @media only screen and (max-width: 1450px) and (min-width: 699px){

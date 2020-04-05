@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -9,6 +9,9 @@ import { TestTwoPageRoutingModule } from './test-two-routing.module';
 import { TestTwoPage } from './test-two.page';
 import {StarToolbarPageModule} from '../../star-toolbar/star-toolbar.module';
 import {CoreModule} from '../../core/core.module';
+import {MatInputModule, MatTooltipModule} from '@angular/material';
+import {FlexModule} from '@angular/flex-layout';
+import {ComponentModule} from '../../component/component.module';
 
 @NgModule({
     imports: [
@@ -17,7 +20,12 @@ import {CoreModule} from '../../core/core.module';
         IonicModule,
         TestTwoPageRoutingModule,
         StarToolbarPageModule,
-        CoreModule
+        CoreModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatTooltipModule,
+        FlexModule,
+        ComponentModule
     ],
   declarations: [TestTwoPage]
 })

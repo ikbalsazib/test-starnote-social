@@ -59,7 +59,7 @@ export class StarToolbarPage implements OnInit, OnDestroy {
       private media: MediaMatcher,
       public popoverController: PopoverController
   ) {
-    this.mobileQuery = media.matchMedia('(max-width: 699px)');
+    this.mobileQuery = media.matchMedia('(max-width: 767px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);
 

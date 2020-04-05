@@ -10,6 +10,7 @@ import { CreatePostPage } from './create-post.page';
 import {StarToolbarPageModule} from '../../star-toolbar/star-toolbar.module';
 import {CoreModule} from '../../core/core.module';
 import {AngularMaterialModule} from '../../angular-material/angular-material.module';
+import {MatTooltipModule} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {AngularMaterialModule} from '../../angular-material/angular-material.mod
         StarToolbarPageModule,
         CoreModule,
         ReactiveFormsModule,
-        AngularMaterialModule
+        AngularMaterialModule,
+        MatTooltipModule
     ],
   declarations: [CreatePostPage]
 })

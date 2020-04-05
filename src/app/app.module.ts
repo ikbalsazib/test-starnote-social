@@ -20,6 +20,7 @@ import {NgxImageCompressService} from 'ngx-image-compress';
 import {HttpClientModule} from '@angular/common/http';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {Ng2TelInputModule} from 'ng2-tel-input';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -37,6 +38,7 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
         FlexLayoutModule,
         InfiniteScrollModule,
         Ng2TelInputModule,
+        CoreModule,
     ],
     providers: [
         StatusBar,
