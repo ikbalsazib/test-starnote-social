@@ -1,0 +1,24 @@
+<div class="posts-section">
+  <!--            {{combinedPosts$ | async | json}}-->
+  <div class="post-bar">
+    <!-- Post Author Top -->
+    <post-auth [authorID]="userPost.authorID" [postDate]="userPost.date"></post-auth>
+    <!-- Main Post View -->
+    <div class="post-view">
+      <app-text-background *ngIf="userPost.postDescription && !userPost.postThumbnail" [textOnly]="userPost.postDescription"></app-text-background>
+      <div class="text-view" *ngIf="userPost.postDescription && userPost.postThumbnail">
+        <p> {{userPost.postDescription}}</p>
+      </div>
+      <div class="image-view" *ngIf="userPost.postImage">
+        <img [src]="userPost.postImage" [alt]="'[Image Thumbnail]'">
+      </div>
+    </div>
+    <!-- Reaction Bottom -->
+    <user-reaction [postID]="userPost.postID"></user-reaction>
+  </div><!--post-bar end-->
+
+  <!--                        <ion-infinite-scroll *ngIf="this.finishedLoading !== true" (ionInfinite)="onInfiniteScroll($event)">-->
+  <!--                            <ion-infinite-scroll-content></ion-infinite-scroll-content>-->
+  <!--                        </ion-infinite-scroll>-->
+
+</div>

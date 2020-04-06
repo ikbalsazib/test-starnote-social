@@ -158,7 +158,7 @@ export class CreatePostPage implements OnInit {
     }
 
     onSubmit() {
-        this.uiService.showLoadingBar('Publishing Your Post..');
+        // this.uiService.showLoadingBar('Publishing Your Post..');
         const textValue = this.reactiveForm.value.text.trim();
 
         if (textValue === '' && this.imgFilesUrl.length !== 2) {

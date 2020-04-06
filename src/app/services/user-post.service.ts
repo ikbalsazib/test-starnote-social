@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {PostModel} from '../interfaces/post-model';
 import {UiService} from './ui.service';
 import {Router} from '@angular/router';
 import {UserModel} from '../interfaces/user-model';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {Movie} from '../interfaces/movie-model';
 import {map, tap} from 'rxjs/operators';
-import {error} from 'util';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 const DB_PATH = '/Posts';
 
@@ -15,27 +14,44 @@ const DB_PATH = '/Posts';
   providedIn: 'root'
 })
 export class UserPostService {
-  postRef: AngularFireList<PostModel> = null;
-  userRef: AngularFireList<UserModel> = null;
-  public isNewPostAdded = new Subject<boolean>();
+    // LoggedIn User Data..
+    userAuthData: any;
+
+    postRef: AngularFireList<PostModel> = null;
+    userRef: AngularFireList<UserModel> = null;
+    public isNewPostAdded = new Subject<boolean>();
 
 
-  // Infinity Scroll..
+    // Infinity Scroll..
     // tslint:disable-next-line:variable-name
-  private _posts$ = new BehaviorSubject<PostModel[]>([]);
-  batch = 2;
-  lastKey = '';
-  finished = false;
+    private _posts$ = new BehaviorSubject<PostModel[]>([]);
+    batch = 2;
+    lastKey = '';
+    finished = false;
 
-  constructor(private db: AngularFireDatabase, private uiService: UiService, private router: Router) {
-    this.postRef = db.list(DB_PATH);
-  }
+    constructor(
+        private afAuth: AngularFireAuth,
+        private db: AngularFireDatabase,
+        private uiService: UiService,
+        private router: Router
+    ) {
+        /* Saving user data in localstorage when
+  logged in and setting up null when logged out */
+        this.afAuth.authState.subscribe(user => {
+            if (user) {
+                this.userAuthData = user;
+            } else {
+                this.userAuthData = null;
+            }
+        });
+        this.postRef = db.list(DB_PATH);
+    }
 
-  get posts$(): Observable<PostModel[]> {
-    return this._posts$.asObservable();
-  }
+    get posts$(): Observable<PostModel[]> {
+        return this._posts$.asObservable();
+    }
 
-  nextPage(): Observable<PostModel[]> {
+    nextPage(): Observable<PostModel[]> {
     if (this.finished) {
       console.log(this.finished);
       return this.posts$;
@@ -84,7 +100,7 @@ export class UserPostService {
     postRefWithId.update({ postID: postRefWithId.key })
         .then(() => {
         this.isNewPostAdded.next(true);
-        this.uiService.hideLoadingBar();
+        // this.uiService.hideLoadingBar();
         this.router.navigate(['/']);
         this.uiService.showToastMessage('Successfully Added your post');
     }).catch(err => {
@@ -123,5 +139,17 @@ export class UserPostService {
 
     getPosts(limit) {
         return this.db.list('/Posts', ref => ref.limitToLast(limit));
+    }
+
+    getPostsByUser(authId, limit) {
+        return this.db.list<PostModel>('/Posts', ref => {
+            return ref.orderByChild('authorID').equalTo(authId).limitToLast(limit);
+        });
+    }
+
+    getPostsByUserLastId(authId) {
+        return this.db.list<PostModel>('/Posts', ref => {
+            return ref.orderByChild('authorID').equalTo(authId).limitToFirst(1);
+        });
     }
 }

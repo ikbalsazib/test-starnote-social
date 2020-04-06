@@ -2,11 +2,16 @@
   <star-toolbar></star-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollEvents]="true"
+             (ionScroll)="logScrolling($event)">
 
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  <ion-button [hidden]="!viewScrollBtn" shape="round" class="scroll-top-btn" fill="clear" (click)="scrollTopContent()">
+    <ion-icon slot="icon-only" name="arrow-up-outline"></ion-icon>
+  </ion-button>
 
   <div class="container">
 <!--    <ion-button (click)="loadMore()">Load</ion-button>-->
@@ -89,32 +94,14 @@
           </div><!--post-topbar end-->
           <!-- *ngIf="combinedPosts$ | async; else loading; let posts" -->
 
-<!--          <ion-button (click)="doRefresh()">Refresh</ion-button>-->
+          <app-post-feed-view *ngFor="let post of postList | reverse" [userPost]="post"></app-post-feed-view>
+          <ion-button slot="fixed" expand="block" (click)="scrollContent('top')">Scroll Top</ion-button>
 
-          <div class="posts-section">
-<!--            {{combinedPosts$ | async | json}}-->
-            <div class="post-bar" *ngFor="let post of postList | reverse">
-              <!-- Post Author Top -->
-              <post-auth [authorID]="post.authorID" [postDate]="post.date"></post-auth>
-              <!-- Main Post View -->
-              <div class="post-view">
-                <app-text-background *ngIf="post.postDescription && !post.postThumbnail" [textOnly]="post.postDescription"></app-text-background>
-                <div class="text-view" *ngIf="post.postDescription && post.postThumbnail">
-                  <p> {{post.postDescription}}</p>
-                </div>
-                <div class="image-view" *ngIf="post.postImage">
-                  <img [src]="post.postImage" [alt]="'[Image Thumbnail]'">
-                </div>
-              </div>
-              <!-- Reaction Bottom -->
-              <user-reaction [postID]="post.postID"></user-reaction>
-            </div><!--post-bar end-->
+          <ion-infinite-scroll *ngIf="this.finishedLoading !== true" (ionInfinite)="onInfiniteScroll($event)">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
 
-            <ion-infinite-scroll *ngIf="this.finishedLoading !== true" (ionInfinite)="onInfiniteScroll($event)">
-              <ion-infinite-scroll-content></ion-infinite-scroll-content>
-            </ion-infinite-scroll>
 
-          </div>
         </ion-col> <!-- END of News Feed -->
 
         <ion-col size="12" size-md="3" class="right-area" *ngIf="!mobileQuery.matches">

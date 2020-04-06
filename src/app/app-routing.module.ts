@@ -28,11 +28,6 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
-    path: 'my-profile',
-    loadChildren: () => import('./pages/profile-view/profile-view.module').then( m => m.ProfileViewPageModule),
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
-  },
-  {
     path: 'test',
     loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   },
@@ -45,13 +40,23 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile-completion/profile-completion.module').then( m => m.ProfileCompletionPageModule)
   },
   {
+    path: 'my-profile',
+    loadChildren: () => import('./pages/my-profile-view/my-profile-view.module').then( m => m.MyProfileViewPageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+  },
+  {
+    path: 'profile-view',
+    loadChildren: () => import('./pages/profile-view/profile-view.module').then( m => m.ProfileViewPageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+  },
+  {
     path: 'test-two',
     loadChildren: () => import('./pages/test-two/test-two.module').then( m => m.TestTwoPageModule)
   },
   {
     path: 'scroll',
     loadChildren: () => import('./pages/scroll/scroll.module').then( m => m.ScrollPageModule)
-  },
+  }
 ];
 
 @NgModule({

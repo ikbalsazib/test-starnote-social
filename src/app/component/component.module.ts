@@ -15,6 +15,7 @@ import {SharedPipesModule} from '../pipes/shared-pipes.module';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import {EmailLoginComponent} from './email-login/email-login.component';
 import {TextBackgroundComponent} from './text-background/text-background.component';
+import {PostFeedViewComponent} from './post-feed-view/post-feed-view.component';
 
 
 
@@ -27,7 +28,8 @@ import {TextBackgroundComponent} from './text-background/text-background.compone
         ProfileShortComponent,
         PostAuthComponent,
         EmailLoginComponent,
-        TextBackgroundComponent
+        TextBackgroundComponent,
+        PostFeedViewComponent
 
     ],
     imports: [
@@ -51,7 +53,8 @@ import {TextBackgroundComponent} from './text-background/text-background.compone
         PostAuthComponent,
         MatDialogModule,
         EmailLoginComponent,
-        TextBackgroundComponent
+        TextBackgroundComponent,
+        PostFeedViewComponent
 
     ]
 })

@@ -1,11 +1,11 @@
 .container {
-  width: 65%;
+  max-width: 1160px;
   margin: auto;
 }
 
 @media only screen and (max-device-width: 1399px) {
   .container {
-    width: 85%;
+    max-width: 1140px;
   }
 }
 
@@ -317,51 +317,27 @@
   background-color: var(--ion-color-primary);
   color: #fff;
 }
-/* ================ posts-section ================== */
 
-.posts-section {
-  width: 100%;
+// Scroll to Top...
+.scroll-top-btn {
+  // display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 999;
+  font-size: 15px;
+  //border: none;
+  //outline: none;
+  //background-color: red;
+  //color: white;
+  cursor: pointer;
+  //padding: 15px;
+  //border-radius: 4px;
 }
-.post-bar {
-  float: left;
-  width: 100%;
-  background-color: #fff;
-  border-left: 1px solid #e4e4e4;
-  border-right: 1px solid #e4e4e4;
-  border-bottom: 1px solid #e4e4e4;
-  margin-bottom: 20px;
-}
 
-
-/* ========== MAIN POST VIEW ========== */
-.post-view {
-  // border-bottom: 1px solid #e5e5e5;
-  .text-view {
-    padding: 14px;
-    p {
-      font-family: 'CircularStd', sans-serif;
-      color: #686868;
-      font-size: 16px;
-      line-height: 24px;
-      margin-bottom: 20px;
-    }
-
-    span {
-      color: #e44d3a;
-      font-weight: 600;
-    }
-  }
-
-  .image-view {
-    width: 100%;
-    height: auto;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
+//.scroll-top-btn:hover {
+//  background-color: #555;
+//}
 
 
 // Responsive..
@@ -373,6 +349,14 @@
   .post-topbar {
     padding: 6px 12px;
     margin-bottom: 20px;
+  }
+
+  // Scroll to Top...
+  .scroll-top-btn {
+    opacity: 0.8;
+    right: -14px;
+    z-index: 999;
+    font-size: 14px;
   }
 
 }

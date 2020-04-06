@@ -12,6 +12,7 @@ import {CoreModule} from '../../core/core.module';
 import {MatInputModule, MatTooltipModule} from '@angular/material';
 import {FlexModule} from '@angular/flex-layout';
 import {ComponentModule} from '../../component/component.module';
+import {SharedPipesModule} from '../../pipes/shared-pipes.module';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {ComponentModule} from '../../component/component.module';
         MatInputModule,
         MatTooltipModule,
         FlexModule,
-        ComponentModule
+        ComponentModule,
+        SharedPipesModule
     ],
   declarations: [TestTwoPage]
 })

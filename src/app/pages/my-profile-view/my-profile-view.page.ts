@@ -1,18 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import * as _ from 'lodash';
-import {map, take} from 'rxjs/operators';
-import {UiService} from '../../services/ui.service';
-import {UserPostService} from '../../services/user-post.service';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable, Subscription} from 'rxjs';
+import {UiService} from '../../services/ui.service';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {UserAuthService} from '../../services/user-auth.service';
+import {UserPostService} from '../../services/user-post.service';
+import {map, take} from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-test-two',
-  templateUrl: './test-two.page.html',
-  styleUrls: ['./test-two.page.scss'],
+  selector: 'app-my-profile-view',
+  templateUrl: './my-profile-view.page.html',
+  styleUrls: ['./my-profile-view.page.scss'],
 })
-export class TestTwoPage implements OnInit, OnDestroy {
+export class MyProfileViewPage implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   sideLinks = [
@@ -88,21 +88,17 @@ export class TestTwoPage implements OnInit, OnDestroy {
   }
 
   onInfiniteScroll(event) {
-    console.log('Infinity Scroll started');
     this.limit += 2; // or however many more you want to load
     setTimeout(() => {
       this.getReasonsPosts(this.authId );
-      console.log('Infinity Scroll has ended');
       event.target.complete();
     }, 1000);
   }
 
   doRefresh(refresher?) {
-    console.log('Begin async Refresher', refresher);
     this.finishedLoading = false;
     setTimeout(() => {
       this.getReasonsPosts(this.authId );
-      console.log('Async Refresher ended');
       if (refresher) {
         refresher.target.complete();
       }
@@ -151,4 +147,5 @@ export class TestTwoPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
 }

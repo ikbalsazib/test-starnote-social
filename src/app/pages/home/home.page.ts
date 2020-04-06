@@ -6,7 +6,7 @@ import {map, take} from 'rxjs/operators';
 import * as _ from 'lodash';
 import {Router} from '@angular/router';
 import {UserPostService} from '../../services/user-post.service';
-import {IonInfiniteScroll} from '@ionic/angular';
+import {IonContent, IonInfiniteScroll} from '@ionic/angular';
 import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
@@ -15,6 +15,10 @@ import {MediaMatcher} from '@angular/cdk/layout';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
+  viewScrollBtn = false;
+  // Scroll..
+  @ViewChild(IonContent, {static: true}) ionContent: IonContent;
+
   // Media Query..
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;
@@ -53,21 +57,21 @@ export class HomePage implements OnInit, OnDestroy {
    */
 
   onInfiniteScroll(event) {
-    console.log('Infinity Scroll started');
+    // console.log('Infinity Scroll started');
     this.limit += 2; // or however many more you want to load
     setTimeout(() => {
       this.getReasonsPosts();
-      console.log('Infinity Scroll has ended');
+      // console.log('Infinity Scroll has ended');
       event.target.complete();
     }, 1000);
   }
 
   doRefresh(refresher?) {
-    console.log('Begin async Refresher', refresher);
+    // console.log('Begin async Refresher', refresher);
     this.finishedLoading = false;
     setTimeout(() => {
       this.getReasonsPosts();
-      console.log('Async Refresher ended');
+      // console.log('Async Refresher ended');
       if (refresher) {
         refresher.target.complete();
       }
@@ -105,6 +109,20 @@ export class HomePage implements OnInit, OnDestroy {
           // Retrieve Post...
           this.postList = keyData;
         });
+  }
+
+  scrollTopContent() {
+      this.ionContent.scrollToTop(300);
+  }
+
+  // Scroll...
+  logScrolling(event: CustomEvent) {
+    const scrollTop = event.detail.scrollTop;
+    if (scrollTop > 500) {
+      this.viewScrollBtn = true;
+    } else {
+      this.viewScrollBtn = false;
+    }
   }
 
 
