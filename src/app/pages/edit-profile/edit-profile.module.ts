@@ -4,21 +4,23 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TestPageRoutingModule } from './test-routing.module';
+import { EditProfilePageRoutingModule } from './edit-profile-routing.module';
 
-import { TestPage } from './test.page';
+import { EditProfilePage } from './edit-profile.page';
 import {StarToolbarPageModule} from '../../star-toolbar/star-toolbar.module';
 import {CoreModule} from '../../core/core.module';
+import {ComponentModule} from '../../component/component.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        TestPageRoutingModule,
+        EditProfilePageRoutingModule,
         CoreModule,
-        StarToolbarPageModule
+        StarToolbarPageModule,
+        ComponentModule
     ],
-  declarations: [TestPage]
+  declarations: [EditProfilePage]
 })
-export class TestPageModule {}
+export class EditProfilePageModule {}

@@ -16,6 +16,8 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import {EmailLoginComponent} from './email-login/email-login.component';
 import {TextBackgroundComponent} from './text-background/text-background.component';
 import {PostFeedViewComponent} from './post-feed-view/post-feed-view.component';
+import {ProfileUpdateFormComponent} from './profile-update-form/profile-update-form.component';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 
 
@@ -29,7 +31,8 @@ import {PostFeedViewComponent} from './post-feed-view/post-feed-view.component';
         PostAuthComponent,
         EmailLoginComponent,
         TextBackgroundComponent,
-        PostFeedViewComponent
+        PostFeedViewComponent,
+        ProfileUpdateFormComponent
 
     ],
     imports: [
@@ -43,6 +46,7 @@ import {PostFeedViewComponent} from './post-feed-view/post-feed-view.component';
         MatFormFieldModule,
         MatInputModule,
         Ng2TelInputModule,
+        ImageCropperModule,
     ],
     exports: [
         SignupFieldComponent,
@@ -54,7 +58,8 @@ import {PostFeedViewComponent} from './post-feed-view/post-feed-view.component';
         MatDialogModule,
         EmailLoginComponent,
         TextBackgroundComponent,
-        PostFeedViewComponent
+        PostFeedViewComponent,
+        ProfileUpdateFormComponent
 
     ]
 })

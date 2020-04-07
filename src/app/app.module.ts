@@ -18,9 +18,9 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {UserAuthService} from './services/user-auth.service';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {HttpClientModule} from '@angular/common/http';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import {CoreModule} from './core/core.module';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 @NgModule({
     declarations: [AppComponent],
@@ -36,8 +36,8 @@ import {CoreModule} from './core/core.module';
         AngularFireStorageModule,
         HttpClientModule,
         FlexLayoutModule,
-        InfiniteScrollModule,
         Ng2TelInputModule,
+        ImageCropperModule,
         CoreModule,
     ],
     providers: [

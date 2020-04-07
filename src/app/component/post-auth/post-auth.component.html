@@ -2,7 +2,7 @@
   <div class="usy-dt">
     <img class="profile-thumb" [src]="user?.imageThumbnail ? user?.imageThumbnail : '../../../assets/images/girl.jpeg'" alt="">
     <div class="usy-name">
-      <h3>{{user?.name ? user.name : 'Unnamed'}}</h3>
+      <h3>{{user?.firstName ? user.firstName + ' ' + user.lastName : 'Unnamed'}}</h3>
       <span><img src="../../../assets/images/clock.png" alt="">{{postDate | dateAgo}}</span>
     </div>
   </div>

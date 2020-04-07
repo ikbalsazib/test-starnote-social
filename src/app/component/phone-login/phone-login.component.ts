@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 import {UserAuthService} from '../../services/user-auth.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {UiService} from '../../services/ui.service';
+import {UserModel} from '../../interfaces/user-model';
 
 @Component({
   selector: 'app-phone-login',
@@ -83,15 +84,9 @@ export class PhoneLoginComponent implements OnInit {
                 this.currentAuthUser = credential.user;
                 this.setAuthUserData(credential.user);
                 this.getUserCompleteFieldData(this.currentAuthUser).valueChanges()
-                    .subscribe(info => {
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                special: JSON.stringify(info)
-                            }
-                        };
-                        const numberOfField = Object.keys(info).length;
-                        if (numberOfField < 15) {
-                            this.router.navigate(['profile-completion'], navigationExtras);
+                    .subscribe((info: UserModel) => {
+                        if (!info.email || !info.phone || !info.firstName) {
+                            this.router.navigate(['profile-completion']);
                         } else {
                             this.ngZone.run(() => {
                                 this.router.navigate(['home']);

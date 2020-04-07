@@ -8,9 +8,9 @@
 
       <div class="inner-view">
         <div class="img-cover">
-          <img src="../../../assets/images/cover.jpg" alt="">
+          <img [src]="!userInfo.coverImageHD ? '../../../assets/images/cover.jpg' : userInfo.coverImageHD" alt="">
           <div class="btn-group">
-            <ion-button class="ion-float-right" color="light">
+            <ion-button class="ion-float-right" color="light" (click)="coverImagePicker.click()">
               <ion-icon slot="start" name="camera"></ion-icon>
               Edit Cover Photo
             </ion-button>
@@ -20,12 +20,12 @@
         <div class="profile-pic">
           <div class="user-pro-img">
             <img [src]="!userInfo.imageThumbnail ? '../../../assets/images/girl.jpeg' : userInfo.imageThumbnail" alt="">
-            <a><i class="fa fa-camera"></i></a>
+            <a (click)="profileImagePicker.click()"><i class="fa fa-camera"></i></a>
           </div><!--user-pro-img end-->
         </div>
 
         <div class="name-text">
-          <h2 class="title">{{!userInfo.name ? 'Unnamed' : userInfo.name}}</h2>
+          <h2 class="title">{{!userInfo.firstName ? 'Unnamed' : userInfo.firstName + ' ' + userInfo.lastName}}</h2>
           <div class="info">
             <p class="desc">
               <ion-icon name="checkmark"></ion-icon>
@@ -75,7 +75,7 @@
           <ion-col size="12" size-md="4">
             <ion-card>
               <ion-list>
-                <ion-item lines="full" button (click)="buttonClick()" *ngFor="let link of sideLinks">
+                <ion-item lines="full" button *ngFor="let link of sideLinks" [routerLink]="link.url">
                   <ion-button slot="start" fill="clear">
                     <ion-icon slot="icon-only" [name]="link.icon"></ion-icon>
                   </ion-button>
@@ -100,8 +100,66 @@
 
   </div>
 
+
+  <input [hidden]="true" #profileImagePicker type="file" (change)="fileProfileChangeEvent($event)" />
+  <input [hidden]="true" #coverImagePicker type="file" (change)="fileCoverChangeEvent($event)" />
+
+
+  <!--For Dialog-->
+  <ng-template #dialogTemplate>
+    <!--        <mat-spinner *ngIf="isLoaded"></mat-spinner>-->
+    <div class="spin" *ngIf="!isLoaded">
+      <ion-spinner color="primary" name="crescent"></ion-spinner>
+    </div>
+    <!--        <ion-spinner *ngIf="isLoaded" name="dots"></ion-spinner>-->
+    <!--        <h2 style="color: #ff4b1a">Image Upload</h2>-->
+    <image-cropper
+            [roundCropper]="true"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            format="jpeg"
+            [resizeToWidth]="600"
+            [resizeToHeight]="600"
+            [imageQuality]="95"
+            (imageCropped)="imageCropped($event)"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+
+    <div class="" *ngIf="isLoaded">
+      <ion-button color="medium" fill="outline" class="ion-float-left" (click)="onCloseDialogue()">Close</ion-button>
+      <ion-button class="ion-float-right" (click)="uploadProfileImage()">Save</ion-button>
+    </div>
+  </ng-template>
+
+  <!--For Dialog-->
+  <ng-template #dialogCoverTemplate>
+    <!--        <mat-spinner *ngIf="isLoaded"></mat-spinner>-->
+    <div class="spin" *ngIf="!isLoaded">
+      <ion-spinner color="primary" name="crescent"></ion-spinner>
+    </div>
+    <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="94 / 35"
+            format="jpeg"
+            [resizeToWidth]="940"
+            [resizeToHeight]="350"
+            [imageQuality]="95"
+            (imageCropped)="imageCropped($event)"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+    <div class="" *ngIf="isLoaded">
+      <ion-button color="medium" fill="outline" class="ion-float-left" (click)="onCloseDialogue()">Close</ion-button>
+      <ion-button class="ion-float-right" (click)="uploadCoverImage()">Save</ion-button>
+    </div>
+  </ng-template>
+
   <ng-template #loading>
     Loading...
   </ng-template>
+
+
 
 </ion-content>

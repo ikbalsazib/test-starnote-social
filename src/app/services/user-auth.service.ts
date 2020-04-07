@@ -49,22 +49,6 @@ logged in and setting up null when logged out */
   userRef: AngularFireList<UserModel> = null;
   currentAuthUser: any;
   userData: any;
-  windowRef: any;
-    // private recaptchaVerifier: firebase.auth.RecaptchaVerifier;
-    private sent = false;
-
-    userInfoo = {
-        name: 'Simon Grimm',
-        website: 'www.ionicacademy.com',
-        address: {
-            zip: 48149,
-            city: 'Muenster',
-            country: 'DE'
-        },
-        interests: [
-            'Ionic', 'Angular', 'YouTube', 'Sports'
-        ]
-    };
 
 
   // Sign in with email/password
@@ -80,16 +64,11 @@ logged in and setting up null when logged out */
             this.currentAuthUser = credential.user;
             // this.setAuthUserData(this.currentAuthUser, 'email');
             this.getUserCompleteFieldData(this.currentAuthUser).valueChanges()
-                .subscribe(info => {
-                    const navigationExtras: NavigationExtras = {
-                        queryParams: {
-                            special: JSON.stringify(info)
-                        }
-                    };
-                    const numberOfField = Object.keys(info).length;
+                .subscribe((info: UserModel) => {
+                    // const numberOfField = Object.keys(info).length;
                     this.uiService.hideLoadingBar();
-                    if (numberOfField < 15) {
-                        this.router.navigate(['profile-completion'], navigationExtras);
+                    if (!info.phone || !info.firstName) {
+                        this.router.navigate(['profile-completion']);
                     } else {
                         this.ngZone.run(() => {
                             this.router.navigate(['/']);
@@ -149,10 +128,11 @@ logged in and setting up null when logged out */
       // const type = user.providerData.map(data => data.providerId);
       // let iPAddress;
       // this.getUserIPAddress().subscribe(info => iPAddress = info.ip);
-      const userData: any = {
+      const userData: UserModel = {
           uID: user.uid,
           email: user.email,
           displayName: user.displayName,
+          firstName: user.displayName,
           photoURL: user.photoURL,
           // ipAddress: iPAddress,
           // phone: '',
@@ -198,15 +178,10 @@ logged in and setting up null when logged out */
                 this.currentAuthUser = credential.user;
                 this.setAuthUserData(this.currentAuthUser, regWith);
                 this.getUserCompleteFieldData(this.currentAuthUser).valueChanges()
-                    .subscribe(info => {
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                special: JSON.stringify(info)
-                            }
-                        };
-                        const numberOfField = Object.keys(info).length;
-                        if (numberOfField < 15) {
-                           this.router.navigate(['profile-completion'], navigationExtras);
+                    .subscribe((info: UserModel) => {
+                        // const numberOfField = Object.keys(info).length;
+                        if (!info.email || !info.phone || !info.firstName) {
+                           this.router.navigate(['profile-completion']);
                        } else {
                             this.ngZone.run(() => {
                                 this.router.navigate(['/']);
@@ -215,7 +190,7 @@ logged in and setting up null when logged out */
                     });
                 // this.SetUserData(result.user);
             }).catch((error) => {
-                window.alert(error);
+                this.uiService.showAlertMessage('Error', error.message);
             });
     }
 
@@ -237,23 +212,6 @@ logged in and setting up null when logged out */
 
     getNewLoggedInStatus(userID) {
         this.db.object(`Users/${userID}`);
-    }
-
-    myTestService() {
-        const isF = true;
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                special: JSON.stringify(this.userInfoo)
-            }
-        };
-        if (isF) {
-            this.router.navigate(['profile-completion'], navigationExtras);
-        } else {
-            this.ngZone.run(() => {
-                this.router.navigate(['/']);
-            });
-        }
-
     }
 
 

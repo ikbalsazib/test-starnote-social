@@ -1,0 +1,207 @@
+
+
+/* ================= sign-in ================ */
+
+
+.login-area {
+  margin-top: 50px;
+}
+
+.left-area{
+  padding: 25px;
+}
+.right-main{
+  margin-top: 25px;
+  padding: 25px;
+}
+.login-content{
+  width: 870px;
+  margin: 0 auto;
+  position: relative;
+}
+// Top Bubble
+.login-content:before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 56px;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+.login-content:after {
+  content: '';
+  position: absolute;
+  top: -37px;
+  left: 43px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.login-container {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+// Right Border...
+.login-container:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  height: 100%;
+  width: 1px;
+  background-color: #f0f0f0;
+}
+
+
+
+/* =============== login-sec ============= */
+
+//.login-sec {
+//  width: 100%;
+//  padding: 25px 0;
+//
+//}
+
+// Down Bubble...
+.login-sec:before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  right: 70px;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #fff;
+}
+.login-sec:after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  right: 55px;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #fff;
+}
+
+
+
+.sign-in-head{
+  font-family: CircularStdMedium, sans-serif;
+  color: #000000;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  // font-family: 'CircularStdMedium', sans-serif;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 120px;
+    height: 2px;
+    background-color: #e44d3a;
+  }
+}
+
+
+.img-wrapper {
+  height:100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.img-wrapper .img-thumb {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.top {
+  text-align: center;
+}
+
+.avatar {
+  width: 100%;
+
+  img {
+    width: 100px;
+    height: auto;
+  }
+}
+
+.img-circle {
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.upload-btn {
+  margin-top: 15px;
+  width: 100%;
+}
+ion-item {
+  --background: transparent;
+}
+
+ion-item {
+  margin-bottom: 10px;
+  // font-size: 15px;
+  color: #888888;
+}
+
+// Spinner & NGX Image Resizer...
+.spin{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  ion-spinner {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+image-cropper {
+  width: auto;
+  max-height: 400px;
+}
+
+// Responsive..
+@media only screen and (max-device-width: 767px) {
+  .login-content{
+    width: 90%;
+  }
+
+  // Right Border...
+  .login-container:before {
+    width: 0;
+  }
+
+}

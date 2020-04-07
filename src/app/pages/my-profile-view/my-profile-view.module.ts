@@ -11,6 +11,7 @@ import {StarToolbarPageModule} from '../../star-toolbar/star-toolbar.module';
 import {CoreModule} from '../../core/core.module';
 import {SharedPipesModule} from '../../pipes/shared-pipes.module';
 import {ComponentModule} from '../../component/component.module';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import {ComponentModule} from '../../component/component.module';
         CoreModule,
         StarToolbarPageModule,
         SharedPipesModule,
-        ComponentModule
+        ComponentModule,
+        ImageCropperModule
     ],
   declarations: [MyProfileViewPage]
 })
