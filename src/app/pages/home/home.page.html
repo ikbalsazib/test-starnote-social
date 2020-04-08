@@ -78,9 +78,9 @@
         </ion-col> <!--END of Left Sidebar-->
 
         <ion-col class="main" size="12" size-md="6">
-          <div class="post-topbar" routerLink="/create-post">
+          <div *ngIf="user$ | async; else loading; let userInfo" class="post-topbar" routerLink="/create-post">
             <div class="user-picy">
-              <img src="../../../assets/images/girl.jpeg" alt="">
+              <img [src]="!userInfo.imageThumbnail ? '../../../assets/images/girl.jpeg' : userInfo.imageThumbnail" alt="">
             </div>
             <div class="status">
               <h6>Write Something...</h6>
@@ -95,7 +95,6 @@
           <!-- *ngIf="combinedPosts$ | async; else loading; let posts" -->
 
           <app-post-feed-view *ngFor="let post of postList | reverse" [userPost]="post"></app-post-feed-view>
-          <ion-button slot="fixed" expand="block" (click)="scrollContent('top')">Scroll Top</ion-button>
 
           <ion-infinite-scroll *ngIf="this.finishedLoading !== true" (ionInfinite)="onInfiniteScroll($event)">
             <ion-infinite-scroll-content></ion-infinite-scroll-content>
@@ -140,7 +139,9 @@
   </div>
 
   <ng-template #loading>
-    <p style="text-align: center">Loading...</p>
+    <div class="spin">
+      <ion-spinner color="primary" name="dots"></ion-spinner>
+    </div>
   </ng-template>
 
 </ion-content>

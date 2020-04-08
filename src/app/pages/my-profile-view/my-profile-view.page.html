@@ -12,7 +12,7 @@
           <div class="btn-group">
             <ion-button class="ion-float-right" color="light" (click)="coverImagePicker.click()">
               <ion-icon slot="start" name="camera"></ion-icon>
-              Edit Cover Photo
+              {{mobileQuery.matches ? 'Edit' : 'Edit Cover Photo'}}
             </ion-button>
           </div>
         </div>

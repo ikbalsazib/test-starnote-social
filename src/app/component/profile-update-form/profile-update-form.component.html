@@ -45,7 +45,7 @@
               </ion-col>
 
               <ion-col size="12" size-md="6" class="right-main">
-                <h3 class="sign-in-head">Complete Your Profile</h3>
+                <h3 class="sign-in-head">Additional Profile Info</h3>
 
                 <div class="sign-in">
 
@@ -55,13 +55,26 @@
                     </ion-item>
 
                     <ion-item>
-                      <ion-label position="floating">Birth Date</ion-label>
-                      <ion-input [ngModel]="existsBirthDate" name="birthDate"></ion-input>
+                        <ion-label position="stacked">Birth Date</ion-label>
+                        <ion-datetime
+                                [ngModel]="existsBirthDate"
+                                name="birthDate"
+                                display-format="YYYY MMMM DD">
+                        </ion-datetime>
                     </ion-item>
 
                     <ion-item>
-                      <ion-label position="floating">Blood Group</ion-label>
-                      <ion-input [ngModel]="existsBloodGroup" name="bloodGroup"></ion-input>
+                        <ion-label>Blood Group</ion-label>
+                        <ion-select placeholder="Select One" [ngModel]="existsBloodGroup" name="bloodGroup">
+                            <ion-select-option value="A+">A+</ion-select-option>
+                            <ion-select-option value="A-">A-</ion-select-option>
+                            <ion-select-option value="B+">B+</ion-select-option>
+                            <ion-select-option value="B-">B-</ion-select-option>
+                            <ion-select-option value="O+">O+</ion-select-option>
+                            <ion-select-option value="O-">O-</ion-select-option>
+                            <ion-select-option value="AB+">AB+</ion-select-option>
+                            <ion-select-option value="AB-">AB-</ion-select-option>
+                        </ion-select>
                     </ion-item>
 
                     <ion-item>
@@ -73,6 +86,7 @@
                       <ion-label position="floating">Refer Code</ion-label>
                       <ion-input ngModel name="referCode"></ion-input>
                     </ion-item>
+
 
                     <div class="btn-group">
                         <ion-button type="submit" class="ion-float-left">{{mobileQuery.matches? 'Update': 'Update Profile'}}</ion-button>

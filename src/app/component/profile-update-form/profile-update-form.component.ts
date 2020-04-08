@@ -13,6 +13,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {UserService} from '../../services/user.service';
+import * as moment from 'moment';
 import {PostModel} from '../../interfaces/post-model';
 
 @Component({
@@ -34,12 +35,14 @@ export class ProfileUpdateFormComponent implements OnInit, OnDestroy {
 
 
     // Database Data..
+    // birthDate = new Date();
+    birthDateInMs: number;
     avatar = '../../../assets/svg/user-colored.svg';
     existsFirstName = '';
     existsLastName = '';
     existsEmail = '';
     existsPhone = '';
-    existsBirthDate = '';
+    existsBirthDate = new Date().toISOString();
     existsBloodGroup = '';
     existsStudyInfo = '';
     existsProfilePic = '';
@@ -124,7 +127,9 @@ export class ProfileUpdateFormComponent implements OnInit, OnDestroy {
       }
 
       if (userInfo.birthDate) {
-          this.existsBirthDate = userInfo.birthDate;
+          const birthDateInMs = userInfo.birthDate;
+          const momentChange = moment(birthDateInMs).format('DD MMM YYYY hh:mm a');
+          this.existsBirthDate = new Date(momentChange).toISOString();
       }
 
       if (userInfo.bloodGroup) {
@@ -230,25 +235,27 @@ export class ProfileUpdateFormComponent implements OnInit, OnDestroy {
         this.isLoaded = false;
     }
 
-  onSubmit(f: NgForm, navigateTo: string) {
-    this.uiService.showLoadingBar('Updating Your Information...');
 
-    const userData = {
-        firstName: f.value.firstName,
-        lastName: f.value.lastName,
-        email: f.value.email,
-        phone: f.value.phone,
-        address: f.value.address,
-        birthDate: f.value.birthDate,
-        bloodGroup: f.value.bloodGroup,
-        studyInfo: f.value.studyInfo,
-        referCode: f.value.referCode,
-    };
+    onSubmit(f: NgForm, navigateTo: string) {
+        // this.uiService.showLoadingBar('Updating Your Information...');
+        const rawBirthDate = f.value.birthDate;
+        const parseBirthDate = new Date(rawBirthDate);
 
-    this.userService.updateUserInfo(this.userId, userData)
+        const userData = {
+            firstName: f.value.firstName,
+            lastName: f.value.lastName,
+            email: f.value.email,
+            phone: f.value.phone,
+            address: f.value.address,
+            birthDate: parseBirthDate.getTime(),
+            bloodGroup: f.value.bloodGroup,
+            studyInfo: f.value.studyInfo,
+            referCode: f.value.referCode,
+        };
+
+        this.userService.updateUserInfo(this.userId, userData)
           .then(completed => {
-            f.reset();
-            this.uiService.hideLoadingBar();
+            // this.uiService.hideLoadingBar();
             this.router.navigate([navigateTo]);
           });
   }
@@ -256,7 +263,7 @@ export class ProfileUpdateFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
       this.subscription.unsubscribe();
       this.mobileQuery.removeListener(this.mobileQueryListener);
-      this.uiService.hideLoadingBar();
+      // this.uiService.hideLoadingBar();
   }
 
 }

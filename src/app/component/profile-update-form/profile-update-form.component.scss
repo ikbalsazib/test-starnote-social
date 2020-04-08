@@ -195,6 +195,10 @@ image-cropper {
 
 // Responsive..
 @media only screen and (max-device-width: 767px) {
+  .right-main{
+    margin-top: -35px;
+  }
+
   .login-content{
     width: 90%;
   }

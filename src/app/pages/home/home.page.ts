@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {UserAuthService} from '../../services/user-auth.service';
 import {map, take} from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {UserPostService} from '../../services/user-post.service';
 import {IonContent, IonInfiniteScroll} from '@ionic/angular';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
+  user$: Observable<any>;
   viewScrollBtn = false;
   // Scroll..
   @ViewChild(IonContent, {static: true}) ionContent: IonContent;
@@ -31,6 +33,7 @@ export class HomePage implements OnInit, OnDestroy {
   finishedLoading = false;
 
   constructor(
+      private afAuth: AngularFireAuth,
       private changeDetectorRef: ChangeDetectorRef,
       private media: MediaMatcher,
       private db: AngularFireDatabase,
@@ -45,8 +48,15 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-      this.getLastPostKey();
-      this.getReasonsPosts();
+    // Get UserInfo...
+    this.subscription = this.afAuth.authState.subscribe((auth) => {
+      if (auth) {
+        this.user$ = this.userAuthService.getUserCompleteFieldData(auth).valueChanges();
+      }
+    });
+
+    this.getLastPostKey();
+    this.getReasonsPosts();
   }
 
     /*
@@ -100,7 +110,10 @@ export class HomePage implements OnInit, OnDestroy {
 
           // Check Last Key...
           const lastKeyMap = keyData.map(data => data.key);
-          const isLast = _.includes(lastKeyMap, this.lastId[0]);
+          let isLast;
+          if (this.lastId) {
+            isLast = _.includes(lastKeyMap, this.lastId[0]);
+          }
           if (isLast) {
             this.finishedLoading = true;
             console.log('Finished...');

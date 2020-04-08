@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {UiService} from '../../services/ui.service';
 import {AngularFireAuth} from '@angular/fire/auth';
@@ -11,6 +11,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {UserModel} from '../../interfaces/user-model';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-my-profile-view',
@@ -19,6 +20,10 @@ import {ImageCroppedEvent} from 'ngx-image-cropper';
 })
 export class MyProfileViewPage implements OnInit, OnDestroy {
   private subscription: Subscription;
+
+  // Responsive..
+  mobileQuery: MediaQueryList;
+  private mobileQueryListener: () => void;
 
   sideLinks = [
     {
@@ -29,32 +34,32 @@ export class MyProfileViewPage implements OnInit, OnDestroy {
     {
       title: 'Posts',
       icon: 'grid',
-      url: '/all-posts'
+      url: '/my-profile'
     },
     {
       title: 'Friends',
       icon: 'people',
-      url: '/all-friends'
+      url: '/my-profile'
     },
     {
       title: 'Groups',
       icon: 'chatbubbles',
-      url: '/my-groups'
+      url: '/my-profile'
     },
     {
       title: 'Photos',
       icon: 'images',
-      url: '/my-groups'
+      url: '/my-profile'
     },
     {
       title: 'Videos',
       icon: 'videocam',
-      url: '/my-groups'
+      url: '/my-profile'
     },
     {
       title: 'About',
       icon: 'information-circle',
-      url: '/my-groups'
+      url: '/my-profile'
     },
   ];
 
@@ -91,8 +96,14 @@ export class MyProfileViewPage implements OnInit, OnDestroy {
       private userPostService: UserPostService,
       private userService: UserService,
       private storage: AngularFireStorage,
-      private matDialog: MatDialog
+      private matDialog: MatDialog,
+      private changeDetectorRef: ChangeDetectorRef,
+      private media: MediaMatcher,
   ) {
+    // Media Query...
+    this.mobileQuery = media.matchMedia('(max-width: 768px)');
+    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this.mobileQueryListener);
   }
 
   ngOnInit() {
@@ -304,6 +315,7 @@ export class MyProfileViewPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.mobileQuery.removeListener(this.mobileQueryListener);
   }
 
 }
