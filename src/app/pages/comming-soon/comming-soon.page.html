@@ -1,0 +1,29 @@
+<ion-header>
+  <star-toolbar></star-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container" *ngIf="!mobileQuery.matches">
+    <div class="center">
+      <div class="content-area">
+        <a href="https://play.google.com/store/apps/details?id=com.stardigiinternational.starnotee"><img src="../../../assets/svg/google-play-logo.svg" alt=""></a>
+        <h1>Download Now The Best Social App</h1>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mobile" *ngIf="mobileQuery.matches">
+    <div class="url">
+      <a href="https://play.google.com/store/apps/details?id=com.stardigiinternational.starnotee">
+        <img src="../../../assets/svg/google-play-logo.svg" alt="">
+      </a>
+    </div>
+    <div class="img-thumb">
+      <a href="https://play.google.com/store/apps/details?id=com.stardigiinternational.starnotee">
+        <img src="../../../assets/images/app-download-banner-mobile.jpg" alt="">
+      </a>
+    </div>
+  </div>
+
+</ion-content>

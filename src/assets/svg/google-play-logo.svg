@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="214" height="75" viewBox="0 0 214 75">
+  <g id="Group_33" data-name="Group 33" transform="translate(-1135 -2070)">
+    <rect id="Rectangle_42" data-name="Rectangle 42" width="214" height="75" rx="10" transform="translate(1135 2070)"/>
+    <g id="Group_32" data-name="Group 32" transform="translate(-0.389 0)">
+      <g id="Group_31" data-name="Group 31" transform="translate(0 -5)">
+        <text id="Get_it_On" data-name="Get it On" transform="translate(1206 2100)" fill="#fff" font-size="12" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">GET</tspan><tspan y="0" font-family="NotoSansBengali-Regular, Noto Sans Bengali"> </tspan><tspan y="0">IT</tspan><tspan y="0" font-family="NotoSansBengali-Regular, Noto Sans Bengali"> </tspan><tspan y="0">ON</tspan></text>
+        <text id="Google_Play" data-name="Google Play" transform="translate(1206 2128)" fill="#fff" font-size="24" font-family="SegoeUI-Semibold, Segoe UI" font-weight="600"><tspan x="0" y="0">Google</tspan><tspan y="0" font-family="NotoSansBengali-SemiBold, Noto Sans Bengali"> </tspan><tspan y="0">Play</tspan></text>
+      </g>
+      <g id="google-play" transform="translate(1113.788 2078)">
+        <path id="Path_13" data-name="Path 13" d="M278.189,173.086l-9.952-5.748L254.6,177.526l13.635,10.188,9.986-5.768a5.172,5.172,0,0,0-.034-8.861Z" transform="translate(-199.145 -148.109)" fill="#ff9100"/>
+        <path id="Path_14" data-name="Path 14" d="M58.9,40.709,46.838,56.222,31.152,68.575A5.237,5.237,0,0,1,29.6,64.852V16.481a5.237,5.237,0,0,1,1.551-3.723L46.838,25.2Z" transform="translate(0 -11.292)" fill="#25d9f8"/>
+        <path id="Path_15" data-name="Path 15" d="M258.048,221.746l-3.447,4.447V217.3Z" transform="translate(-199.145 -192.328)" fill="#00c0f1"/>
+        <path id="Path_16" data-name="Path 16" d="M81.056,19.213l-10.2,10.2L43.1,1.467A7.774,7.774,0,0,1,44.17.674a5.1,5.1,0,0,1,5.24.1L67.4,11.354Z" transform="translate(-11.949)" fill="#7fe881"/>
+        <path id="Path_17" data-name="Path 17" d="M268.253,106.66l-10.2,10.2-3.447-3.447V98.8Z" transform="translate(-199.145 -87.446)" fill="#5bc980"/>
+        <path id="Path_18" data-name="Path 18" d="M81.056,266.2,67.4,274.064,49.375,284.59a5.251,5.251,0,0,1-2.655.758,5.351,5.351,0,0,1-2.551-.689,7.777,7.777,0,0,1-1.069-.793L70.852,256Z" transform="translate(-11.949 -226.582)" fill="#ff637b"/>
+        <path id="Path_19" data-name="Path 19" d="M268.253,266.2l-13.652,7.86V259.447L258.048,256Z" transform="translate(-199.145 -226.582)" fill="#e63950"/>
+      </g>
+    </g>
+  </g>
+</svg>

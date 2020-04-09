@@ -8,7 +8,7 @@
 
       <div class="inner-view">
         <div class="img-cover">
-          <img [src]="!userInfo.coverImageHD ? '../../../assets/images/cover.jpg' : userInfo.coverImageHD" alt="">
+          <img [src]="userInfo.coverImageHD ? userInfo.coverImageHD : '../../../assets/svg/profile_cover_web.svg'" alt="">
           <div class="btn-group">
             <ion-button class="ion-float-right" color="light" (click)="coverImagePicker.click()">
               <ion-icon slot="start" name="camera"></ion-icon>
@@ -19,18 +19,22 @@
 
         <div class="profile-pic">
           <div class="user-pro-img">
-            <img [src]="!userInfo.imageThumbnail ? '../../../assets/images/girl.jpeg' : userInfo.imageThumbnail" alt="">
+            <img [src]="userInfo.imageThumbnail ? userInfo.imageThumbnail : '../../../assets/svg/user-primary.svg'" alt="">
             <a (click)="profileImagePicker.click()"><i class="fa fa-camera"></i></a>
           </div><!--user-pro-img end-->
         </div>
 
         <div class="name-text">
-          <h2 class="title">{{!userInfo.firstName ? 'Unnamed' : userInfo.firstName + ' ' + userInfo.lastName}}</h2>
+          <h2 class="title">
+            {{userInfo.firstName ? userInfo.firstName : 'Unnamed'}}
+            {{userInfo.lastName ? userInfo.lastName : ''}}
+          </h2>
           <div class="info">
             <p class="desc">
               <ion-icon name="checkmark"></ion-icon>
-              <span>Work at Softlab IT</span>
+              <span>{{userInfo.studyInfo ? userInfo.studyInfo : 'No Study or Work Info'}}</span>
             </p>
+            <p class="bio">{{userInfo.bio ? userInfo.bio : ''}}</p>
           </div>
         </div>
         <div class="short-details">
@@ -75,7 +79,7 @@
           <ion-col size="12" size-md="4">
             <ion-card>
               <ion-list>
-                <ion-item lines="full" button *ngFor="let link of sideLinks" [routerLink]="link.url">
+                <ion-item lines="full" *ngFor="let link of sideLinks" [routerLink]="link.url">
                   <ion-button slot="start" fill="clear">
                     <ion-icon slot="icon-only" [name]="link.icon"></ion-icon>
                   </ion-button>
@@ -157,7 +161,9 @@
   </ng-template>
 
   <ng-template #loading>
-    Loading...
+    <div class="spin">
+      <ion-spinner color="primary" name="dots"></ion-spinner>
+    </div>
   </ng-template>
 
 

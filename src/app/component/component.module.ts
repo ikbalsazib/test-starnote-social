@@ -18,6 +18,8 @@ import {TextBackgroundComponent} from './text-background/text-background.compone
 import {PostFeedViewComponent} from './post-feed-view/post-feed-view.component';
 import {ProfileUpdateFormComponent} from './profile-update-form/profile-update-form.component';
 import {ImageCropperModule} from 'ngx-image-cropper';
+import {UserOnlineComponent} from './user-online/user-online.component';
+import {AppDownloadBannerComponent} from './app-download-banner/app-download-banner.component';
 
 
 
@@ -32,7 +34,9 @@ import {ImageCropperModule} from 'ngx-image-cropper';
         EmailLoginComponent,
         TextBackgroundComponent,
         PostFeedViewComponent,
-        ProfileUpdateFormComponent
+        ProfileUpdateFormComponent,
+        UserOnlineComponent,
+        AppDownloadBannerComponent
 
     ],
     imports: [
@@ -59,7 +63,9 @@ import {ImageCropperModule} from 'ngx-image-cropper';
         EmailLoginComponent,
         TextBackgroundComponent,
         PostFeedViewComponent,
-        ProfileUpdateFormComponent
+        ProfileUpdateFormComponent,
+        UserOnlineComponent,
+        AppDownloadBannerComponent
 
     ]
 })

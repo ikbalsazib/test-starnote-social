@@ -1,0 +1,57 @@
+
+.container {
+  background: url("../../../assets/images/app-download-banner.png");
+  background-repeat: no-repeat;
+  background-size: cover ;
+  height: 100%;
+  width: 100%;
+  background-position: center;
+}
+
+.content-area {
+  text-align: center;
+  width: 400px;
+  position: absolute;
+  right: 50px;
+  bottom: 200px;
+
+  h1 {
+    font-family: 'CircularStdMedium', sans-serif;
+    color: #FFFFFF;
+  }
+}
+
+@media only screen and (max-width: 1068px) and (min-width: 767px){
+
+  .content-area {
+    text-align: center;
+    width: 300px;
+    position: absolute;
+    right: 10px;
+    bottom: 200px;
+
+    h1 {
+      font-size: 22px;
+      font-family: 'CircularStdMedium', sans-serif;
+      color: #FFFFFF;
+    }
+  }
+}
+
+// Mobile Design
+.mobile {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  .url {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .img-thumb {
+    width: 80%;
+    margin: auto;
+    img {
+      width: 100%;
+    }
+  }
+
+}

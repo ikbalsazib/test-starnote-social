@@ -1,97 +1,108 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {UserModel} from '../../interfaces/user-model';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {UserAuthService} from '../../services/user-auth.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-mobile-sidebar-content',
   templateUrl: './mobile-sidebar-content.component.html',
   styleUrls: ['./mobile-sidebar-content.component.scss'],
 })
-export class MobileSidebarContentComponent implements OnInit {
+export class MobileSidebarContentComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
   pages = [
     {
       title: 'Home',
-      icon: 'home',
+      icon: '../../../assets/icon/ic_home_new.svg',
       url: ''
     },
     {
       title: 'Find Friends',
-      icon: 'laptop',
-      url: '/our-service'
+      icon: '../../../assets/icon/ic_add_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Groups',
-      icon: 'albums',
-      url: '/our-course'
+      icon: '../../../assets/icon/ic_group_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Friends Request',
-      icon: 'desktop',
-      url: '/ff'
+      icon: '../../../assets/icon/ic_add_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Apply For Teacher',
-      icon: 'school',
-      url: '/df'
+      icon: '../../../assets/icon/ic_dictionary_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Wallet',
-      icon: 'heart',
-      url: '/dffs'
+      icon: '../../../assets/icon/ic_wallet_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Donate',
-      icon: 'color-palette',
-      url: '/ui'
+      icon: '../../../assets/icon/ic_donate_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Quick Links',
-      icon: 'globe',
-      url: '/about-us'
+      icon: '../../../assets/icon/ic_link_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Settings',
-      icon: 'globe',
-      url: '/about-us'
+      icon: '../../../assets/icon/ic_settings_new.svg',
+      url: '/coming-soon'
+    },
+    {
+      title: 'Feedback',
+      icon: '../../../assets/icon/ic_send_new.svg',
+      url: '/coming-soon'
     },
     {
       title: 'Contact Us',
-      icon: 'mail',
-      url: '/contact-us'
+      icon: '../../../assets/icon/ic_star_new.svg',
+      url: '/coming-soon'
     },
     {
-      title: 'Version',
-      icon: 'logo-angular',
-      url: '/po'
-    }
-  ];
-
-  buttonLinks = [
-    {
-      title: 'Booking Service',
-      icon: 'albums',
-      url: '/service-booking'
-    },
-    {
-      title: 'Apply for Course',
-      icon: 'school',
-      url: '/our-course/apply-for-course'
-    },
-    {
-      title: 'Offers',
-      icon: 'checkmark-circle',
-      url: '/our-course/new-offer'
-    },
-    {
-      title: 'Account',
-      icon: 'person',
-      url: '/login'
+      title: 'About Us',
+      icon: '../../../assets/icon/ic_about_us.svg',
+      url: '/coming-soon'
     }
   ];
 
   // For Active Design..
   selectedPath = '';
+  // Get User...
+  user: any;
+  userInfo: UserModel;
 
-  constructor() { }
+  constructor(
+      private afAuth: AngularFireAuth,
+      private userAuthService: UserAuthService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription = this.afAuth.authState.subscribe((auth) => {
+      if (auth) {
+        this.user = auth;
+        this.userAuthService.getUserCompleteFieldData(this.user).valueChanges()
+            .subscribe((userInfo: UserModel) => {
+              this.userInfo = userInfo;
+            });
+      }
+    });
+  }
+
+  onLogout() {
+    this.userAuthService.SignOut();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
 }

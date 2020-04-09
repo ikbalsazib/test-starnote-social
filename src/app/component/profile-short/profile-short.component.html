@@ -6,7 +6,10 @@
       </div>
     </div><!--username-dt end-->
     <div class="user-specs">
-      <h3>{{!userInfo.firstName ? 'Unnamed' : userInfo.firstName + ' ' + userInfo.lastName}}</h3>
+      <h3>
+        {{userInfo.firstName ? userInfo.firstName : 'Unnamed'}}
+        {{userInfo.lastName ? userInfo.lastName : ''}}
+      </h3>
       <span>Graphic Designer at Self Employed</span>
     </div>
   </div><!--user-profile end-->
@@ -20,12 +23,14 @@
       <span>420</span>
     </li>
     <li>
-      <a routerLink="/my-profile">View Profile</a>
+      <ion-button routerLink="/my-profile" fill="outline">View Profile</ion-button>
     </li>
   </ul>
 </div><!--user-data end-->
 
 
 <ng-template #loading>
-  Loading...
+  <div class="spin">
+    <ion-spinner color="primary" name="dots"></ion-spinner>
+  </div>
 </ng-template>

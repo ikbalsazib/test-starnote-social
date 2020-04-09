@@ -12,12 +12,12 @@
           <ion-col size="12" class="top" *ngIf="user$ | async; else loading; let userInfo">
             <div class="profile-topbar">
               <div class="user-detail ion-float-left">
-                <img class="profile-thumb" [src]="!userInfo.imageThumbnail ? '../../../assets/images/girl.jpeg' : userInfo.imageThumbnail" [alt]="userInfo.name">
+                <img class="profile-thumb" [src]="userInfo.imageThumbnail ? userInfo.imageThumbnail : '../../../assets/svg/user-color.svg'"  [alt]="userInfo.firstName">
               </div>
               <div class="user-info ion-float-left">
-                <h5>{{!userInfo.name ? 'Unnamed' : userInfo.name}}</h5>
+                <h5>{{!userInfo.firstName ? 'Unnamed' : userInfo.firstName}}</h5>
                 <button class="btn-privacy">
-                  <img class="btn-privacy-image" src="../../../assets/icon/iconfinder_globe.svg">
+                  <img class="btn-privacy-image" src="../../../assets/icon/public_globe.svg">
                   Public
                 </button>
               </div>

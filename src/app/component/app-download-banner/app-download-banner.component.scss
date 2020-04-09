@@ -1,0 +1,54 @@
+
+
+// Image Upload View...
+.attach-area {
+  width: 100%;
+  border-left: 1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+//...
+// Image Hover
+.image-view-big {
+  position: relative;
+  width: 100%;
+  height: auto;
+
+  .big-thumb {
+    // border-radius: 20px;
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+}
+
+
+.button-view {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.image-view-big:hover .big-thumb {
+  opacity: 0.3;
+}
+
+.image-view-big:hover .button-view {
+  opacity: 1;
+}
+.download {
+  cursor: pointer;
+  width: 100%;
+  img {
+    width: 100%;
+  }
+}

@@ -1,15 +1,15 @@
 <ion-toolbar color="primary" *ngIf="!mobileQuery.matches">
 
   <ion-buttons slot="end">
-
     <ion-button (click)="presentPopover($event)">
       <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-buttons>
 
-  <div class="containers" fxLayout="row" fxLayoutAlign="start center"  >
+  <div class="containers" fxLayout="row" fxLayoutAlign="space-around center">
     <div class="logo" routerLink="/">
-      <img src="../../assets/images/logo_star_white.svg" alt="">
+<!--      <img src="../../assets/images/logo_star_white.svg" alt="">-->
+      <img src="../../assets/logo/starnote_semi_bolt_white_logo.svg" alt="">
     </div>
 
     <div class="search-bar">
@@ -20,47 +20,42 @@
     </div><!--search-bar end-->
 
 
-    <div class="custom-nav-btn" slot="end">
+    <div class="custom-nav-btn">
       <nav class="desktop-nav">
         <ul class="nav-list">
-          <li>
-            <!--            <a [routerLink]="p.url" [class.active]="selectedPath === p.url" router-direction="forward">-->
-            <!--              {{p.title}}-->
-            <!--            </a>-->
-            <a routerLink="/home" title="">
-              <span><img src="../../assets/icon/home.svg" alt=""></span>
-              Home
-            </a>
-          </li>
-          <li>
-            <a routerLink="/messages" title="">
-              <span><img src="../../assets/icon/chat.svg" alt=""></span>
-              Message
-            </a>
-          </li>
-          <li>
-            <a routerLink="/my-profile" title="">
-              <span><img src="../../assets/icon/user.svg" alt=""></span>
-              Profile
-            </a>
-          </li>
-          <li>
-            <a routerLink="/test" title="">
-              <span><img src="../../assets/icon/bell.svg" alt=""></span>
-              Notification
-            </a>
-          </li>
-          <li>
-            <a href="#" title="">
-              <span><img style="width: 22px" src="../../assets/icon/trofee.svg" alt=""></span>
-              LeaderBoard
+          <li routerLink="/">
+            <a>
+              <span><i class="fa fa-home icon"></i>Home</span>
             </a>
           </li>
 
-          <li>
-            <a href="#" title="">
-              <span><img  src="../../assets/icon/add-user.svg" alt=""></span>
-              Friends
+          <li routerLink="/coming-soon">
+            <a>
+              <span><i class="fa fa-comment icon"></i>Message</span>
+            </a>
+          </li>
+
+          <li routerLink="/my-profile">
+            <a>
+              <span><i class="fa fa-user icon"></i>Profile</span>
+            </a>
+          </li>
+
+          <li routerLink="/coming-soon">
+            <a>
+              <span><i class="fa fa-bell icon"></i>Notification</span>
+            </a>
+          </li>
+
+          <li routerLink="/coming-soon" *ngIf="showFriends">
+            <a>
+              <span><i class="fa fa-user-plus icon"></i>Friends</span>
+            </a>
+          </li>
+
+          <li routerLink="/coming-soon" *ngIf="showLeaderBoard">
+            <a>
+              <span><i class="fa fa-gamepad icon"></i>Leaderboard</span>
             </a>
           </li>
         </ul>
@@ -82,7 +77,7 @@
   </ion-buttons>
 
     <div class="logo" style="width: 96px; " routerLink="/">
-      <img style="width: 100%; " src="../../assets/images/logo_star_white.svg" alt="">
+      <img style="width: 100%; " src="../../assets/logo/starnote_semi_bolt_white_logo.svg" alt="">
     </div>
 
   <ion-buttons slot="end">
@@ -92,18 +87,18 @@
     <!--    </ion-button>-->
 
     <div class="">
-      <ion-button>
+      <ion-button routerLink="/coming-soon">
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
       </ion-button>
 
-      <ion-button>
+      <ion-button routerLink="/coming-soon">
+        <ion-icon slot="icon-only" name="chatbubble-ellipses-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button routerLink="/coming-soon">
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
     </div>
-
-    <ion-button (click)="presentPopover($event)">
-      <ion-icon name="ellipsis-vertical-outline" slot="icon-only"></ion-icon>
-    </ion-button>
   </ion-buttons>
 
 </ion-toolbar>

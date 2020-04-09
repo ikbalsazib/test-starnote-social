@@ -39,7 +39,7 @@
 .user-specs {
   float: left;
   width: 100%;
-  padding: 63px 0 27px 0;
+  padding: 35px 0 10px 0;
 }
 .user-specs h3 {
   font-family: 'CircularStdMedium', sans-serif;
@@ -68,7 +68,7 @@
   width: 100%;
   border-bottom: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
-  padding: 15px 0;
+  padding: 10px 0;
 }
 .user-fw-status li:last-child {
   border-bottom: 0;
@@ -79,12 +79,13 @@
 }
 .user-fw-status li h4 {
   font-family: 'CircularStdMedium', sans-serif;
-  color: #686868;
+  color: #4d4d4d;
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 .user-fw-status span {
-  color: #000000;
+  color: #959595;
   font-size: 20px;
 }
 .user-fw-status li a {
@@ -93,4 +94,17 @@
   color: #e44d3a;
   font-size: 14px;
   font-weight: 600;
+}
+
+// Spinner & NGX Image Resizer...
+.spin{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // height: 100%;
+
+  ion-spinner {
+    width: 60px !important;
+    height: 60px !important;
+  }
 }

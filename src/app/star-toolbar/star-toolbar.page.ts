@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {MenuController, PopoverController} from '@ionic/angular';
 import {Router, RouterEvent} from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -11,45 +11,16 @@ import {PopoverContentComponent} from '../core/popover-content/popover-content.c
 })
 export class StarToolbarPage implements OnInit, OnDestroy {
 
-  buttonLinks = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'Profile',
-      url: '/profile',
-      icon: 'user'
-    },
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'Profile',
-      url: '/profile',
-      icon: 'user'
-    },
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'Profile',
-      url: '/profile',
-      icon: 'user'
-    }
-  ];
-
   mobileQuery: MediaQueryList;
   ionMenuIsOpened: boolean;
 
   // For Active Design..
   selectedPath = '';
   private mobileQueryListener: () => void;
+
+  // show and hide..
+  showLeaderBoard = false;
+  showFriends = false;
 
 
   constructor(
@@ -68,14 +39,21 @@ export class StarToolbarPage implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    if (window.innerWidth > 1279) {
+      this.showLeaderBoard = true;
+    }
 
+    if (window.innerWidth > 842) {
+      this.showFriends = true;
+    }
   }
 
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: PopoverContentComponent,
       event: ev,
-      translucent: true
+      translucent: true,
+      cssClass: 'customPopover'
     });
     return await popover.present();
   }

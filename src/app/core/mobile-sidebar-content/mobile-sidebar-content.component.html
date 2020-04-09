@@ -1,23 +1,33 @@
+<div class="top-short-profile" fxLayout="column" fxLayoutAlign="center center">
+  <ion-avatar>
+    <img [src]="userInfo?.imageThumbnail ? userInfo?.imageThumbnail : '../../../assets/svg/user-light.svg'" alt="">
+  </ion-avatar>
+  <h4>
+    {{userInfo?.firstName ? userInfo?.firstName : 'Unnamed'}}
+    {{userInfo?.lastName ? userInfo?.lastName : ''}}
+  </h4>
+  <ion-menu-toggle>
+    <ion-button fill="outline" color="light" routerLink="/my-profile">View Profile</ion-button>
+  </ion-menu-toggle>
+</div>
+
 <ion-list>
 
   <ion-menu-toggle *ngFor="let p of pages">
     <ion-item lines="none" [routerLink]="p.url" routerDirection="root" [class.active-item]="selectedPath === p.url">
-      <ion-icon [name]="p.icon" slot="start"></ion-icon>
-      <ion-label>{{p.title}}</ion-label>
+<!--      <img class="ic-icon" src="../../../assets/icon/ic_group_new.svg">-->
+      <img class="ic-icon" [src]="p.icon">
+      <ion-label class="item-label">{{p.title}}</ion-label>
     </ion-item>
   </ion-menu-toggle>
+
   <ion-item-divider></ion-item-divider>
 
-
-  <ul class="view-on-mobile" fxHide.gt-xs="true">
-    <ion-menu-toggle *ngFor="let p of buttonLinks">
-      <li>
-        <ion-button [routerLink]="p.url" fill="outline" [class.active-item-btn]="selectedPath === p.url">
-          <ion-icon slot="icon-only" [name]="p.icon"></ion-icon>
-          {{p.title}}
-        </ion-button>
-      </li>
-    </ion-menu-toggle>
-  </ul>
+  <ion-menu-toggle>
+    <ion-item lines="none" (click)="onLogout()">
+      <img class="ic-icon" src="../../../assets/icon/ic_exit_new.svg">
+      <ion-label class="item-label">Logout</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
 
 </ion-list>
